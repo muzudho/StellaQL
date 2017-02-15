@@ -22,6 +22,11 @@ There is no rollback at error suspension. Please keep a backup of your data.
 
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702110107a41b.png?raw=true)  
 
+# ライセンス License
+Copyright (c) 2017 TAKAHASHI Satoshi (Handle: Muzudho)(Dojin circle: "Grayscale")  
+Released under the MIT license  
+http://opensource.org/licenses/mit-license.php  
+
 # 導入方法 How to install.
 (1) Git Hub の [Clone or download] - Download ZIP ボタンをクリックしてください。  
 Click the [Clone or download] - Download ZIP button on Git Hub.  
