@@ -38,3 +38,17 @@ StellaQL-master/StellaQL/Assets/StellaQL folder to Assets folder.
 Double click Assets/AnimatorControllers/Demo_Zoo.  
 ![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/tree/master/img/201702160428gif83.gif)  
 
+(6) [Tutorial (チュートリアル)] ボタンをクリックしてください。  
+Please click the [Tutorial] button.  
+![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/tree/master/img/201702160428gif84.gif)  
+
+
+
+
+
+
+
+
+
+
+
