@@ -23,8 +23,8 @@ There is no rollback at error suspension. Please keep a backup of your data.
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702110107a41b.png?raw=true)  
 
 # 価格 Price
-無料。
-Free.
+無料。  
+Free.  
 
 - 任意で作者に寄付することもできます。  
 Optionally you can donate to the author.  
@@ -35,6 +35,9 @@ Payment : https://enty.jp/grayscale
 Wishlist : https://www.amazon.co.jp/gp/registry/wishlist/1VWBU6FPLQC3W/ref=nav_wishlist_lists_1
 
 # ライセンス License
+オープンソースです。  
+Open source.  
+
 Copyright (c) 2017 TAKAHASHI Satoshi (Handle: Muzudho)(Dojin circle: "Grayscale")  
 Released under the MIT license  
 http://opensource.org/licenses/mit-license.php  
