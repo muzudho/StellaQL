@@ -152,10 +152,19 @@ public class StateCmdline : EditorWindow
         #region Animator controller readability judgment
         if (!UserDefinedDatabase.Instance.AnimationControllerFilePath_to_table.ContainsKey(oldPath_animatorController))
         {
-            GUILayout.Label("Failure.", EditorStyles.boldLabel);
-            GUILayout.Label("Please, Animator controller", EditorStyles.boldLabel);
-            GUILayout.Label(" set path to ", EditorStyles.boldLabel);
-            GUILayout.Label(String.Concat("(", FileUtility_Engine.PATH_USER_DEFINED_DATABASE, ")"), EditorStyles.boldLabel);
+            int step = 1;
+            if (""== oldPath_animatorController)
+            {
+                GUILayout.Label("Failure.", EditorStyles.boldLabel);
+                GUILayout.Label(String.Concat("(", step, ") Please drag and drop"), EditorStyles.boldLabel);
+                GUILayout.Label("    your animator controller", EditorStyles.boldLabel);
+                GUILayout.Label("    to the box above.", EditorStyles.boldLabel);
+                step++;
+            }
+            GUILayout.Label(String.Concat("(",step,") Please add the"), EditorStyles.boldLabel);
+            GUILayout.Label("    path of your animator controller", EditorStyles.boldLabel);
+            GUILayout.Label(String.Concat("    to ",FileUtility_Engine.PATH_USER_DEFINED_DATABASE), EditorStyles.boldLabel);
+            step++;
 
             UserDefinedDatabase.Instance.Dump_Presentable(info_message);
             isActivate_animatorController = false;

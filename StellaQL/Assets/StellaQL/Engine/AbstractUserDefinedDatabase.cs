@@ -12,7 +12,8 @@ namespace StellaQL
         /// </summary>
         public void Dump_Presentable(StringBuilder message)
         {
-            message.Append("Registerd "); message.Append(AnimationControllerFilePath_to_table.Count); message.AppendLine(" paths.");
+            message.AppendLine("Please add the path of your animator controller.");
+            message.Append(AnimationControllerFilePath_to_table.Count); message.AppendLine(" mappings of animator controller and generated C # script are registered.");
             int i = 0;
             foreach (string path in AnimationControllerFilePath_to_table.Keys)
             {
