@@ -1,4 +1,0 @@
-#layerNum#,#machineStateNum#,#stateNum#,#layerName#,#statemachinePath#,name,cycleOffset,cycleOffsetParameter,hideFlags,iKOnFeet,mirror,mirrorParameter,mirrorParameterActive,motion_name,nameHash,speed,speedParameter,speedParameterActive,tag,writeDefaultValues,[EOL],
-0,0,0,,,Alpaca,1,New Float,HideInHierarchy,True,True,New Float,True,,2135656967,3.4,New Float,True,HelloTokyo,False,
-0,0,0,,,Cat,0,,HideInHierarchy,False,False,,False,,-1508702904,1.23,New Float,True,,True,
-0,0,0,,,Rabbit,0,,"HideInHierarchy, HideInInspector",False,False,,False,,1845302191,1,,False,,True,

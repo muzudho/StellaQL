@@ -66,12 +66,13 @@ public class StateCmdline : EditorWindow
             m_ac = AssetDatabase.LoadAssetAtPath<AnimatorController>(oldPath_animatorController);// Re-acquire animator controller.
         }
         bool repaint_allWindow = false;
-        bool show_reference = false;
+        bool show_tutorial = false;
+        bool show_commandReference = false;
 
-        #region How to use button
-        if (GUILayout.Button("How to use (使い方)"))
+        #region Tutorial button
+        if (GUILayout.Button("Tutorial (チュートリアル)"))
         {
-            show_reference = true;
+            show_tutorial = true;
             Repaint(); // It seems that other windows do not refresh.
             repaint_allWindow = true;
         }
@@ -191,15 +192,15 @@ public class StateCmdline : EditorWindow
             }
             GUILayout.Space(4.0f);
             #endregion
-            #region Command text area
+            #region Query text area
             {
-                GUILayout.Label("Command line (StellaQL)");
+                GUILayout.Label("Query (StellaQL)");
                 scroll_commandBox = EditorGUILayout.BeginScrollView(scroll_commandBox);
                 commandline = EditorGUILayout.TextArea(commandline);//, GUILayout.Height(position.height - 30)
                 EditorGUILayout.EndScrollView();
             }
             #endregion
-            #region Command execution button
+            #region Execution button
             {
                 if (GUILayout.Button("Execute"))
                 {
@@ -211,6 +212,15 @@ public class StateCmdline : EditorWindow
                     info_message.Append("Execute end."); info_message.AppendLine();
                 }
             }
+            #endregion
+            #region Command reference button
+            if (GUILayout.Button("Command reference (コマンド一覧)"))
+            {
+                show_commandReference = true;
+                Repaint();
+                repaint_allWindow = true;
+            }
+            GUILayout.Space(4.0f);
             #endregion
             #region Spreadsheet output button
             // Actually output CSV format file
@@ -295,7 +305,12 @@ public class StateCmdline : EditorWindow
             }
 
             // After the notice that the play button was pressed.
-            if (show_reference)
+            if (show_tutorial)
+            {
+                info_message.AppendLine(); // Leave one line between the note and the note.
+                Tutorial.ToContents(info_message);
+            }
+            if (show_commandReference)
             {
                 info_message.AppendLine(); // Leave one line between the note and the note.
                 Reference.ToContents(info_message);

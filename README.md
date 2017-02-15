@@ -1,5 +1,12 @@
 # StellaQL
-Unity editor like query. And update in spreadsheet.
+There are 2 features.
+
+- You can update the animator controller using the query (StellaQL).
+- You can update several properties of the animator controller using a spreadsheet.
+
+Disclaimer
+
+- There is no rollback at error suspension. Please keep a backup of your data.
 
 # How to install.
 (1) This Git Hub [Clone or download] - Download ZIP  
