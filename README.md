@@ -1,12 +1,12 @@
 ﻿# StellaQL
-特長は２つです。  
-There are 2 features.  
+Unityのアニメーター・コントローラーを編集するツールです。  
+It is a tool to edit Unity's animator controller.  
 
-- クエリー風の操作でアニメーター・コントローラーを更新できます。  
-You can update the animator controller using the query (StellaQL).  
+- クエリー風の操作で更新できます。  
+It can be updated by query-like operation.  
 
-- スプレッドシートを用いて、アニメーター・コントローラーのいくつかのフィールドを更新できます。  
-You can update several properties of the animator controller using a spreadsheet.  
+- いくつかのフィールドを、スプレッドシートを用いて、一覧、更新できます。  
+Several fields can be updated, list, updated using spreadsheet.  
 
 免責  
 Disclaimer  
