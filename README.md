@@ -1,4 +1,4 @@
-﻿# StellaQL
+﻿# ステラキューエル StellaQL
 Unityのアニメーター・コントローラーを編集するツールです。  
 It is a tool to edit Unity's animator controller.  
 
@@ -8,20 +8,22 @@ It can be updated by query-like operation.
 - いくつかのフィールドを、スプレッドシートを用いて、一覧、更新できます。  
 Several fields can be updated, list, updated using spreadsheet.  
 
+![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160552a8b.png?raw=true)  
+
 免責  
 Disclaimer  
 
 - エラー等で中断した際に、データは復元しません。データのバックアップを残しておいてください。  
 There is no rollback at error suspension. Please keep a backup of your data.  
 
-# How to install.
-(1) [Clone or download] - Download ZIP をクリック。  
-This Git Hub [Clone or download] - Download ZIP  
+# 導入方法 How to install.
+(1) Git Hub の [Clone or download] - Download ZIP ボタンをクリックしてください。  
+Click the [Clone or download] - Download ZIP button on Git Hub.  
 
 (2) ダウンロードしたファイルを解凍してください。  
-File decompression.
+Decompression the downloaded file.   
 
-ex.) http://www.7-zip.org/  
+ex.) 7zip : http://www.7-zip.org/  
 
 (3) StellaQL-master/StellaQL/Assets/StellaQL フォルダーを、 Assets フォルダーの下にコピーしてください。  
 StellaQL-master/StellaQL/Assets/StellaQL folder to Assets folder.  
