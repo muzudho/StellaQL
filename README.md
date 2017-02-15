@@ -32,15 +32,16 @@ StellaQL-master/StellaQL/Assets/StellaQL folder to Assets folder.
 
 (4) メニューから [Window] - [State Machine Command line (StellaQL)] をクリックし、ウィンドウをドッキングさせてください。  
 [Window] - [State Machine Command line (StellaQL)], And docking window.  
-![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/tree/master/img/201702151752gif82.gif?raw=true)  
+![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/blob/master/img/201702151752gif82.gif?raw=true)  
+                                     
 
 (5) Assets/AnimatorControllers/Demo_Zoo をダブルクリックしてください。  
 Double click Assets/AnimatorControllers/Demo_Zoo.  
-![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/tree/master/img/201702160428gif83.gif?raw=true)  
+![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/blob/master/img/201702160428gif83.gif?raw=true)  
 
 (6) [Tutorial (チュートリアル)] ボタンをクリックしてください。  
 Please click the [Tutorial] button.  
-![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/tree/master/img/201702160428gif84.gif?raw=true)  
+![Please, click here(Animation.gif)](https://github.com/muzudho/StellaQL/blob/master/img/201702160428gif84.gif?raw=true)  
 
 
 
