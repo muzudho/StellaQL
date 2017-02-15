@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{54E8B5EB-36F1-2ECA-A2CB-DF5C63178AD6}") = "StellaQL", "Assembly-CSharp.csproj", "{B6F7A114-B288-7940-B1C5-8D413C418CBD}"
+EndProject
+Project("{54E8B5EB-36F1-2ECA-A2CB-DF5C63178AD6}") = "StellaQL", "Assembly-CSharp-Editor.csproj", "{9B94863E-542D-E7F1-662B-874811E071B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6F7A114-B288-7940-B1C5-8D413C418CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F7A114-B288-7940-B1C5-8D413C418CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F7A114-B288-7940-B1C5-8D413C418CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F7A114-B288-7940-B1C5-8D413C418CBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B94863E-542D-E7F1-662B-874811E071B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B94863E-542D-E7F1-662B-874811E071B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B94863E-542D-E7F1-662B-874811E071B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B94863E-542D-E7F1-662B-874811E071B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
