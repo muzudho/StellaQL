@@ -649,7 +649,7 @@ namespace StellaQL
         /// </summary>
         public static bool AddAnyState(AnimatorController ac, HashSet<AnimatorStateMachine> statemachines_src, HashSet<AnimatorState> states_dst, StringBuilder info_message)
         {
-            info_message.Append("Transition.AddAnyState: Source "); info_message.Append(statemachines_src.Count); info_message.Append(" states. Destination "); info_message.Append(states_dst.Count); info_message.AppendLine(" states.");
+            //info_message.Append("Transition.AddAnyState: Source "); info_message.Append(statemachines_src.Count); info_message.Append(" states. Destination "); info_message.Append(states_dst.Count); info_message.AppendLine(" states.");
             foreach (AnimatorStateMachine statemachine_src in statemachines_src)
             {
                 foreach (AnimatorState state_dst in states_dst)
@@ -666,7 +666,7 @@ namespace StellaQL
         /// </summary>
         public static bool AddEntryState(AnimatorController ac, HashSet<AnimatorStateMachine> statemachines_src, HashSet<AnimatorState> states_dst, StringBuilder info_message)
         {
-            info_message.Append("Transition.AddEntryState: Source "); info_message.Append(statemachines_src.Count); info_message.Append(" states. Destination "); info_message.Append(states_dst.Count); info_message.AppendLine(" states.");
+            //info_message.Append("Transition.AddEntryState: Source "); info_message.Append(statemachines_src.Count); info_message.Append(" states. Destination "); info_message.Append(states_dst.Count); info_message.AppendLine(" states.");
             foreach (AnimatorStateMachine statemachine_src in statemachines_src)
             {
                 foreach (AnimatorState state_dst in states_dst)
@@ -683,7 +683,7 @@ namespace StellaQL
         /// </summary>
         public static bool AddExitState(AnimatorController ac, HashSet<AnimatorState> states, StringBuilder message)
         {
-            message.Append("Transition.AddExitState: "); message.Append(states.Count); message.AppendLine(" states.");
+            //message.Append("Transition.AddExitState: "); message.Append(states.Count); message.AppendLine(" states.");
             foreach (AnimatorState state_src in states)
             {
                 if (null == state_src) { return false; }

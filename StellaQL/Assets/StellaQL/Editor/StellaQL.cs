@@ -1567,10 +1567,15 @@ namespace StellaQL
         /// <summary>
         /// A line beginning with "#" is a comment.
         /// Delete comment line and blank line.
+        /// 
+        /// I reffered it.
+        /// \r to \r\n : http://www.madeinclinic.jp/c/20140201/
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
         public static void DeleteLineCommentAndBlankLine(ref string query) {
+            query = query.Replace("\n", "\r\n").Replace("\r\r", "\r"); // \r to \r\n
+
             string[] lines = query.Split(new [] { Environment.NewLine }, StringSplitOptions.None);
             int caret;
             for (int iLine = 0; iLine < lines.Length; iLine++) {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 
 namespace StellaQL
 {
@@ -9,30 +8,27 @@ namespace StellaQL
     /// </summary>
     public class UserDefinedDatabase : AbstractUserDefinedDatabase
     {
-        static UserDefinedDatabase() { Instance = new UserDefinedDatabase(); }
-        public static UserDefinedDatabase Instance { get; private set; }
-
         UserDefinedDatabase()
         {
             AnimationControllerFilePath_to_table = new Dictionary<string, AControllable>()
             {
-                // List here! File path to instance.
-                {FileUtility_Engine.PATH_ANIMATOR_CONTROLLER_FOR_DEMO_TEST, StellaQL.Acons.Demo_Zoo.AControl.Instance },
+                //
+                // List here! Animator controller file path to instance.
+                //
+                {"Assets/StellaQL/AnimatorControllers/Demo_Zoo.controller", StellaQL.Acons.Demo_Zoo.AControl.Instance },
+                // ex.)
+                //{"Assets/Your animator controllers/MainScene_Bird.controller", YourNamespace.MainScene_Bird.AControl.Instance },
+                //{"Assets/Your animator controllers/Fish.controller", YourNamespace.Fish.AControl.Instance },
+                //{"Assets/Your animator controllers/Tiger.controller", YourNamespace.Tiger.AControl.Instance },
             };
         }
 
+        #region Singleton
         /// <summary>
-        /// For error.
+        /// I am making this class as a singleton design pattern.
         /// </summary>
-        public void Dump_Presentable(StringBuilder message)
-        {
-            message.Append("Registerd "); message.Append(AnimationControllerFilePath_to_table.Count); message.AppendLine(" paths.");
-            int i = 0;
-            foreach (string path in AnimationControllerFilePath_to_table.Keys)
-            {
-                message.Append("["); message.Append(i); message.Append("]"); message.AppendLine(path);
-                i++;
-            }
-        }
+        static UserDefinedDatabase() { Instance = new UserDefinedDatabase(); }
+        public static UserDefinedDatabase Instance { get; private set; }
+        #endregion
     }
 }

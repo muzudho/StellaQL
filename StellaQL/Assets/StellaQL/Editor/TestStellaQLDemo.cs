@@ -1,4 +1,9 @@
-﻿using NUnit.Framework;
+﻿//
+// Required. This file new line is \r\n.
+//
+// Visual Studio 2015 [File] - [Advanced Save Options ...] - Line endings: [Windows (CR LF)]
+//
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
@@ -38,7 +43,7 @@ namespace StellaQL
         /// Testing comments and blank lines
         /// </summary>
         [Test]
-        public void N30_Query_Comment()
+        public void N30_Query_Comment1()
         {
             string query = @"# comment A
 
@@ -51,16 +56,43 @@ namespace StellaQL
                         # comment C
 
                         ";
+
+            LexcalP.DeleteLineCommentAndBlankLine(ref query);
+
+            Assert.AreEqual(@"                        STATE SELECT
+                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})
+", query);
+        }
+        /// <summary>
+        /// Testing comments and blank lines
+        /// </summary>
+        [Test]
+        public void N30_Query_Comment2()
+        {
+            string query = @"# comment A
+
+                        STATE SELECT
+
+                        # comment B
+
+                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})
+
+                        # comment C
+
+                        ";
+
             // OK if the STATE SELECT statement moves
-            HashSet<int> recordHashes;
+            int caret = 0;
+            QueryTokens qt = new QueryTokens("Query syntax Not applicable");
+
+            LexcalP.DeleteLineCommentAndBlankLine(ref query);// Delete all comments and blank lines.
+            LexcalP.VarSpaces(query, ref caret); // Remove the first blank.
+            SyntaxP.Pattern syntaxPattern = SyntaxP.FixedQuery(query, ref caret, ref qt);
+
             StringBuilder message = new StringBuilder();
-            bool successful = Querier.ExecuteStateSelect(query, AControl.Instance.StateHash_to_record, out recordHashes, message);
+            bool successful = Querier.Execute(m_ac, qt, syntaxPattern, AControl.Instance, message);
 
             Assert.IsTrue(successful);
-            Assert.AreEqual(3, recordHashes.Count);
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_ALPACA)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_CAT)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_RABBIT)));
         }
 
         [Test]
@@ -95,7 +127,7 @@ namespace StellaQL
 
             bool successful = Querier.Execute(m_ac, qt, syntaxPattern, AControl.Instance, message);
 
-            Debug.Log(message.ToString());
+            //ebug.Log("N30_Query_TransitionAnysateInsert: " + message.ToString());
             Assert.IsTrue(successful);
         }
         [Test]
@@ -111,7 +143,7 @@ namespace StellaQL
 
             bool successful = Querier.Execute(m_ac, qt, syntaxPattern, AControl.Instance, message);
 
-            Debug.Log(message.ToString());
+            //ebug.Log("N30_Query_TransitionEntryInsert: " + message.ToString());
             Assert.IsTrue(successful);
         }
         [Test]
@@ -126,7 +158,7 @@ namespace StellaQL
 
             bool successful = Querier.Execute(m_ac, qt, syntaxPattern, AControl.Instance, message);
 
-            Debug.Log(message.ToString());
+            //ebug.Log("N30_Query_TransitionExitInsert: " + message.ToString());
             Assert.IsTrue(successful);
         }
         #endregion
@@ -1058,7 +1090,7 @@ namespace StellaQL
 
             bool successful = LexcalP.VarParentesis(query, ref caret, out parenthesis);
 
-            Debug.Log("parenthesis="+ parenthesis);
+            //ebug.Log("parenthesis="+ parenthesis);
             Assert.IsTrue(successful, parenthesis);
             Assert.AreEqual("( ( Dash ) [ Punch Kick ] )", parenthesis);
         }
@@ -1077,12 +1109,14 @@ namespace StellaQL
             hit = LexcalP.VarSpaces(@"
 a", ref caret);
             Assert.IsTrue(hit);
-            Assert.AreEqual(2, caret); // new line is 2 characters?
+            //Assert.IsTrue(0<caret && caret < 3, "caret=["+caret+"]"); // new line is 1 or 2 characters?
+            Assert.AreEqual(2, caret, "caret=[" + caret + "]"); // new line is 2 characters?
 
             caret = 0;
             hit = LexcalP.VarParentesis(@"(alpaca bear)
 ", ref caret, out parenthesis);
             Assert.IsTrue(hit);
+            //Assert.IsTrue(13 < caret && caret < 13 + 3, "caret=[" + caret + "]"); // new line is 1 or 2 characters?
             Assert.AreEqual(13 + 2, caret); // new line is 2 characters?
             Assert.AreEqual("(alpaca bear)", parenthesis);
         }
