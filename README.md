@@ -99,20 +99,16 @@ Please refer to the Demo_Zoo.cs file, inherit the automatically generated abstra
 
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160807a7b.png?raw=true)  
 
-(3) Assets/StellaQL/StellaQLUserSettings.cs ファイルを開いてください。  
-Open the Assets/StellaQL/StellaQLUserSettings.cs file.  
+(3) Assets/StellaQL/StellaQLUserSettings.cs ファイルを StellaQLフォルダーの外に出して、開いてください。  
+Please put the Assets/StellaQL/StellaQLUserSettings.cs file out of the StellaQL folder and open it.  
 
-アニメーター・コントローラー・ファイルのパスと、作った継承クラスのペアを追加してください。  
+![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702170817gif87.gif?raw=true)  
+
+(4) アニメーター・コントローラー・ファイルのパスと、作った継承クラスのペアを追加してください。  
 Add the animator controller file path and the inherited class pair you created.  
 
-Assets/StellaQL/StellaQLUserSettings.cs ファイルは、StellaQLのフォルダーを差し替えるときに消してしまいやすいので注意して扱いましょう。  
-The Assets/StellaQL/StellaQLUserSettings.cs file is easy to erase when replacing the StellaQL folder, so treat it carefully.  
+![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702170820a11b.png?raw=true)  
 
-StellaQLフォルダーの外に出しておくといいでしょう。
-It's a good idea to put it outside the StellaQL folder.
-
-![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160807a8b.png?raw=true)  
-
-(4) **これで準備完了です。** Demo_Zoo と同じように StellaQL を使って扱えます。  
+(5) **これで準備完了です。** Demo_Zoo と同じように StellaQL を使って扱えます。  
 **You are ready.** You can handle it using StellaQL just like Demo_Zoo.  
 
