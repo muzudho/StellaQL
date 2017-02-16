@@ -105,6 +105,11 @@ Open the Assets/StellaQL/UserDefinedDatabase.cs file.
 アニメーター・コントローラー・ファイルのパスと、作った継承クラスのペアを追加してください。  
 Add the animator controller file path and the inherited class pair you created.  
 
-(4) これで準備完了です。Demo_Zoo と同じように StellaQL を使って扱えます。  
-You are ready. You can handle it using StellaQL just like Demo_Zoo.  
+Assets/StellaQL/UserDefinedDatabase.cs ファイルは、StellaQLのフォルダーを差し替えるときに消してしまいやすいので注意して扱いましょう。  
+The Assets/StellaQL/UserDefinedDatabase.cs file is easy to erase when replacing the StellaQL folder, so treat it carefully.  
+
+![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160807a8b.png?raw=true)  
+
+(4) **これで準備完了です。** Demo_Zoo と同じように StellaQL を使って扱えます。  
+**You are ready.** You can handle it using StellaQL just like Demo_Zoo.  
 
