@@ -58,9 +58,9 @@ namespace StellaQL
         {
             string fullpath = System.IO.Path.GetFullPath(AssetDatabase.GetAssetPath(ac.GetInstanceID()));
 
-            // ファイル名はネーム・スペースにも使うので、空白を詰めたい。
-            // Since file names are also used for namespaces, we want to fill in whitespace.
-            string filename = FullpathConstantGenerator.String_to_AlphabetFigureOnly(Path.GetFileNameWithoutExtension(fullpath));
+            // ファイル名はネーム・スペースに合わせたいので同じ処理をします。
+            // Since we want to match the file name to the namespace we will do the same thing.
+            string filename = FullpathConstantGenerator.String_to36_pascalCase(Path.GetFileNameWithoutExtension(fullpath), "_", "_");
 
             return Path.Combine(
                 Directory.GetParent(fullpath).FullName,
