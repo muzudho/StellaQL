@@ -80,13 +80,27 @@ Please click the [Tutorial] button.
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif84.gif?raw=true)  
 
 #あなた用の設定 Settings for you
-あなたのアニメーター・コントローラーで StellaQL を使う方法
-How to use StellaQL with your animator controller
+あなたのアニメーター・コントローラーで StellaQL を使う方法  
+How to use StellaQL with your animator controller  
 
 (1) あなたのアニメーター・コントローラー・ファイル（.controller）を、StateCmdline ウィンドウの [Animator Controller Drag & Drop]エリアにドラッグ＆ドロップしてください。  
 Drag and drop your animator controller file (.controller) into the [Animator Controller Drag & Drop] area of the StateCmdline window.  
 
-(2) Assets/StellaQL/UserDefinedDatabase.cs ファイルを開いてください。  
+(2) [Generate C# (Fullpath of all states)]ボタンを押してください。  
+Please press the Generate C # (Fullpath of all states) button.  
+
+アニメーター・コントローラー・ファイルと同じフォルダに、抽象クラスが自動で生成されます。  
+An abstract class is automatically generated in the same folder as the animator controller file.  
+
+Demo_Zoo.cs ファイルを参考に、自動生成された抽象クラスを継承して、クラスを作ってください。  
+Please refer to the Demo_Zoo.cs file, inherit the automatically generated abstract class and create a class.  
+
+(3) Assets/StellaQL/UserDefinedDatabase.cs ファイルを開いてください。  
 Open the Assets/StellaQL/UserDefinedDatabase.cs file.  
 
-TODO: 書きかけ  
+アニメーター・コントローラー・ファイルのパスと、作った継承クラスのペアを追加してください。  
+Add the animator controller file path and the inherited class pair you created.  
+
+(4) これで準備完了です。Demo_Zoo と同じように StellaQL を使って扱えます。  
+You are ready. You can handle it using StellaQL just like Demo_Zoo.  
+
