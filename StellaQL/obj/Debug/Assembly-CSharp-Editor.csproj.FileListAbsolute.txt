@@ -52,4 +52,3 @@ C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\UnityEngine.V
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp-Editor.dll
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp-Editor.pdb
-C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\Assembly-CSharp.pdb

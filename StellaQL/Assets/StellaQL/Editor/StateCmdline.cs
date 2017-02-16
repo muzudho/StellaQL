@@ -170,7 +170,7 @@ public class StateCmdline : EditorWindow
 
         bool isActivate_aconState;
         #region Acon state readability judgment
-        if (!UserDefinedDatabase.Instance.AnimationControllerFilePath_to_table.ContainsKey(oldPath_animatorController))
+        if (!UserSettings.Instance.AnimationControllerFilepath_to_userDefinedInstance.ContainsKey(oldPath_animatorController))
         {
             int step = 1;
             if (""== oldPath_animatorController)
@@ -183,10 +183,10 @@ public class StateCmdline : EditorWindow
             }
             GUILayout.Label(String.Concat("(",step,") Please add the"), EditorStyles.boldLabel);
             GUILayout.Label("    path of your animator controller", EditorStyles.boldLabel);
-            GUILayout.Label(String.Concat("    to ",FileUtility_Engine.PATH_USER_DEFINED_DATABASE), EditorStyles.boldLabel);
+            GUILayout.Label(String.Concat("    to ",FileUtility_Engine.PATH_USER_SETTINGS), EditorStyles.boldLabel);
             step++;
 
-            UserDefinedDatabase.Instance.Dump_Presentable(info_message);
+            UserSettings.Instance.Dump_Presentable(info_message);
             isActivate_aconState = false;
         }
         else
@@ -209,7 +209,7 @@ public class StateCmdline : EditorWindow
                 if (GUILayout.Button("Execute"))
                 {
                     info_message.Append("I pressed the Execute button."); info_message.AppendLine();
-                    AControllable userDefinedStateTable = UserDefinedDatabase.Instance.AnimationControllerFilePath_to_table[oldPath_animatorController];
+                    AControllable userDefinedStateTable = UserSettings.Instance.AnimationControllerFilepath_to_userDefinedInstance[oldPath_animatorController];
                     SequenceQuerier.Execute(m_ac, commandline, userDefinedStateTable, info_message);
                     Repaint();
                     repaint_allWindow = true;
