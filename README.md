@@ -1,9 +1,9 @@
 ﻿# Table of content
-- [What is StellaQL?](#What-is-StellaQL) ステラキューエルとは？
-- [Price is free](#Price-is-free) 無料です
-- [License is MIT license](#License-is-MIT-license) MIT ライセンスです
-- [How to install](#How-to-install) 導入方法
-- [Settings for use with your Unity project](#Settings-for-use-with-your-Unity-project) あなたのUnityプロジェクトで使うための設定
+- [What is StellaQL?](#what-is-stellaql) ステラキューエルとは？
+- [Price is free](#price-is-free) 無料です
+- [License is MIT license](#license-is-mit-license) MIT ライセンスです
+- [How to install](#how-to-install) 導入方法
+- [Settings for use with your Unity project](#settings-for-use-with-your-unity-project) あなたのUnityプロジェクトで使うための設定
 
 # What is StellaQL?
 **ステラキューエルとは？**  
