@@ -487,7 +487,7 @@ namespace StellaQL
         {
             foreach (AnimatorState state in states) // For all specified states
             {
-                message.Append("Update: "); message.AppendLine(state.name);
+                //message.Append("Update: "); message.AppendLine(state.name);
                 foreach (KeyValuePair<string,string> pair in properties)
                 {
                     switch (pair.Key)

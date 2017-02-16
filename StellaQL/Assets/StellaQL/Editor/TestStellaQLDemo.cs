@@ -1099,7 +1099,7 @@ namespace StellaQL
         /// Parser new line test
         /// </summary>
         [Test]
-        public void N80_Lexical_Newline()
+        public void N80_Lexical_Newline_WindowsCrLf()
         {
             int caret = 0;
             bool hit;
@@ -1110,7 +1110,7 @@ namespace StellaQL
 a", ref caret);
             Assert.IsTrue(hit);
             //Assert.IsTrue(0<caret && caret < 3, "caret=["+caret+"]"); // new line is 1 or 2 characters?
-            Assert.AreEqual(2, caret, "caret=[" + caret + "]"); // new line is 2 characters?
+            Assert.AreEqual(2, caret, "caret=[" + caret + "] (If windows, It's 2. CR LF)"); // new line is 2 characters?
 
             caret = 0;
             hit = LexcalP.VarParentesis(@"(alpaca bear)
