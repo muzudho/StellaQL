@@ -53,23 +53,29 @@ Decompression the downloaded file.
 
 ex.) 7zip : http://www.7-zip.org/  
 
-(3) StellaQL-master/StellaQL/Assets/StellaQL フォルダーを、 Assets フォルダーの下にコピーしてください。  
+(3) StellaQL-master/StellaQL/StellaQL_MacroApplication.ods ファイルを、あなたのプロジェクト・フォルダーにコピーしてください。  
+Copy the StellaQL-master / StellaQL / StellaQL_MacroApplication.ods file to your project folder.  
+![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif85.gif?raw=true)  
+
+required.) LibreOffice Calc (Free) : http://www.libreoffice.org/  
+
+(4) StellaQL-master/StellaQL/Assets/StellaQL フォルダーを、 Assets フォルダーの下にコピーしてください。  
 StellaQL-master/StellaQL/Assets/StellaQL folder to Assets folder.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702151752gif81.gif?raw=true)  
 
 - No  StellaQL-master/StellaQL/
 - Yes StellaQL-master/StellaQL/Assets/StellaQL
 
-(4) メニューから [Window] - [State Machine Command line (StellaQL)] をクリックし、ウィンドウをドッキングさせてください。  
+(5) メニューから [Window] - [State Machine Command line (StellaQL)] をクリックし、ウィンドウをドッキングさせてください。  
 [Window] - [State Machine Command line (StellaQL)], And docking window.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702151752gif82.gif?raw=true)  
                                      
 
-(5) Assets/AnimatorControllers/Demo_Zoo をダブルクリックしてください。  
+(6) Assets/AnimatorControllers/Demo_Zoo をダブルクリックしてください。  
 Double click Assets/AnimatorControllers/Demo_Zoo.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif83.gif?raw=true)  
 
-(6) [Tutorial (チュートリアル)] ボタンをクリックしてください。  
+(7) [Tutorial (チュートリアル)] ボタンをクリックしてください。  
 Please click the [Tutorial] button.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif84.gif?raw=true)  
 
