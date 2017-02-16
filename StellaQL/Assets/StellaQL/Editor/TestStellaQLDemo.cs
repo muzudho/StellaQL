@@ -27,7 +27,7 @@ namespace StellaQL
         public void N30_Query_StateSelect()
         {
             string query = @"STATE SELECT
-                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})";
+                        WHERE TAG ([(Ei Si)(Bi)]{I})";
             HashSet<int> recordHashes;
             StringBuilder message = new StringBuilder();
             bool successful = Querier.ExecuteStateSelect(query, AControl.Instance.StateHash_to_record, out recordHashes, message);
@@ -51,7 +51,7 @@ namespace StellaQL
 
                         # comment B
 
-                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})
+                        WHERE TAG ([(Ei Si)(Bi)]{I})
 
                         # comment C
 
@@ -60,7 +60,7 @@ namespace StellaQL
             LexcalP.DeleteLineCommentAndBlankLine(ref query);
 
             Assert.AreEqual(@"                        STATE SELECT
-                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})
+                        WHERE TAG ([(Ei Si)(Bi)]{I})
 ", query);
         }
         /// <summary>
@@ -75,7 +75,7 @@ namespace StellaQL
 
                         # comment B
 
-                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})
+                        WHERE TAG ([(Ei Si)(Bi)]{I})
 
                         # comment C
 
@@ -100,7 +100,7 @@ namespace StellaQL
         {
             string query = @"TRANSITION SELECT
                         FROM ""Base Layer\.Zebra""
-                        TO TAG ([(Alpha Cee)(Beta)]{Eee})";
+                        TO TAG ([(Ei Si)(Bi)]{I})";
             HashSet<int> recordHashesSrc;
             HashSet<int> recordHashesDst;
             StringBuilder message = new StringBuilder();
@@ -170,11 +170,11 @@ namespace StellaQL
         [Test]
         public void N40_Fetch_ByLockers()
         {
-            List<List<string>> tokenLockers = new List<List<string>>(){ // "([(Alpha Cee)(Beta)]{Eee})"
-            new List<string>() { "Cee", "Alpha", },
-            new List<string>() { "Beta", },
+            List<List<string>> tokenLockers = new List<List<string>>(){ // "([(Ei Si)(Bi)]{I})"
+            new List<string>() { "Si", "Ei", },
+            new List<string>() { "Bi", },
             new List<string>() { "1","0",},
-            new List<string>() { "Eee", },
+            new List<string>() { "I", },
             new List<string>() { "3","2",},
         };
             List<string> tokenLockersOperation = new List<string>() { "(", "(", "[", "{", "(", };
@@ -366,8 +366,8 @@ namespace StellaQL
         [Test]
         public void N50_RecordsFilter_TagsAnd()
         {
-            // Alpha | Eee
-            HashSet<int> attrs = Code.Hashes( new string[]{ AControl.TAG_ALPHA, AControl.TAG_EEE });
+            // Ei | I
+            HashSet<int> attrs = Code.Hashes( new string[]{ AControl.TAG_EI, AControl.TAG_I });
             HashSet<int> recordHashes = RecordsFilter.Tags_And(attrs, AControl.Instance.StateHash_to_record);
 
             Assert.AreEqual(5, recordHashes.Count);
@@ -384,8 +384,8 @@ namespace StellaQL
         [Test]
         public void N50_RecordsFilter_TagsOr()
         {
-            // TAG [ Alpha Eee Beta Eee ]
-            HashSet<int> attrs = Code.Hashes(new string[]{AControl.TAG_ALPHA,AControl.TAG_EEE,AControl.TAG_BETA,AControl.TAG_EEE });
+            // TAG [ Ei Bi I ]
+            HashSet<int> attrs = Code.Hashes(new string[]{AControl.TAG_EI,AControl.TAG_BI,AControl.TAG_I });
             HashSet<int> recordHashes = RecordsFilter.Tags_Or(attrs, AControl.Instance.StateHash_to_record);
 
             Assert.AreEqual(19, recordHashes.Count);
@@ -416,8 +416,8 @@ namespace StellaQL
         [Test]
         public void N50_RecordsFilter_TagsNotAndNot()
         {
-            // { Beta、Eee }
-            HashSet<int> attrs = Code.Hashes(new string[] { AControl.TAG_BETA, AControl.TAG_EEE });
+            // { Bi、I }
+            HashSet<int> attrs = Code.Hashes(new string[] { AControl.TAG_BI, AControl.TAG_I });
             HashSet<int> recordHashes = RecordsFilter.Tags_NotAndNot(attrs, AControl.Instance.StateHash_to_record);
 
             Assert.AreEqual(25, recordHashes.Count);
@@ -458,11 +458,11 @@ namespace StellaQL
         [Test]
         public void N60_ToAttrLocker_FromKeywordlistSet()
         {
-            HashSet<int> attrLocker = Code.Hashes(new string[] { AControl.TAG_BETA, AControl.TAG_DEE });
+            HashSet<int> attrLocker = Code.Hashes(new string[] { AControl.TAG_BI, AControl.TAG_DI });
 
             Assert.AreEqual(2, attrLocker.Count);
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_BETA)));
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_DEE )));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_BI)));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_DI )));
         }
 
         /// <summary>
@@ -471,14 +471,14 @@ namespace StellaQL
         [Test]
         public void N60_ToAttrLocker_FromNGKeywordSet()
         {
-            HashSet<int> set = Code.Hashes(new string[] { AControl.TAG_BETA, AControl.TAG_DEE });
-            HashSet<int> attrLocker = TagSetOpe.Complement(set, Code.Hashes(new[] { AControl.TAG_ZERO, AControl.TAG_ALPHA, AControl.TAG_BETA, AControl.TAG_CEE, AControl.TAG_DEE, AControl.TAG_EEE, AControl.TAG_HORN, }));
+            HashSet<int> set = Code.Hashes(new string[] { AControl.TAG_BI, AControl.TAG_DI });
+            HashSet<int> attrLocker = TagSetOpe.Complement(set, Code.Hashes(new[] { AControl.TAG_ZERO, AControl.TAG_EI, AControl.TAG_BI, AControl.TAG_SI, AControl.TAG_DI, AControl.TAG_I, AControl.TAG_HORN, }));
 
             Assert.AreEqual(5, attrLocker.Count);
             Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_ZERO)));
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_ALPHA)));
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_CEE)));
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_EEE)));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_EI)));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_SI)));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_I)));
             Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_HORN)));
         }
 
@@ -489,14 +489,14 @@ namespace StellaQL
         public void N60_ToAttrLocker_GetComplement()
         {
             // Hold it as an int type
-            HashSet<int> set = Code.Hashes(new string[] { AControl.TAG_BETA, AControl.TAG_DEE });
-            HashSet<int> attrLocker = TagSetOpe.Complement(set, Code.Hashes(new[] { AControl.TAG_ZERO, AControl.TAG_ALPHA, AControl.TAG_BETA, AControl.TAG_CEE, AControl.TAG_DEE, AControl.TAG_EEE, AControl.TAG_HORN, }));
+            HashSet<int> set = Code.Hashes(new string[] { AControl.TAG_BI, AControl.TAG_DI });
+            HashSet<int> attrLocker = TagSetOpe.Complement(set, Code.Hashes(new[] { AControl.TAG_ZERO, AControl.TAG_EI, AControl.TAG_BI, AControl.TAG_SI, AControl.TAG_DI, AControl.TAG_I, AControl.TAG_HORN, }));
 
             Assert.AreEqual(5, attrLocker.Count);
             Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_ZERO)));
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_ALPHA)));
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_CEE)));
-            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_EEE)));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_EI)));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_SI)));
+            Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_I)));
             Assert.IsTrue(attrLocker.Contains(Animator.StringToHash(AControl.TAG_HORN)));
         }
         #endregion
@@ -658,7 +658,7 @@ namespace StellaQL
         {
             string query = @"STATE UPDATE
                         SET name ""WhiteCat"" age 7
-                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})";
+                        WHERE TAG ([(Ei Si)(Bi)]{I})";
             QueryTokens qt = new QueryTokens();
             int caret = 0;
             bool successful = SyntaxP.Fixed_StateUpdate(query, ref caret, ref qt);
@@ -675,7 +675,7 @@ namespace StellaQL
             Assert.AreEqual("", qt.To_FullnameRegex);
             Assert.AreEqual("", qt.To_Tag);
             Assert.AreEqual("", qt.Where_FullnameRegex);
-            Assert.AreEqual("([(Alpha Cee)(Beta)]{Eee})", qt.Where_Tag);
+            Assert.AreEqual("([(Ei Si)(Bi)]{I})", qt.Where_Tag);
             Assert.AreEqual("", qt.The);
         }
 
@@ -741,7 +741,7 @@ namespace StellaQL
         public void N70_Syntax_StateSelect_Tag()
         {
             string query = @"STATE SELECT
-                        WHERE TAG ([(Alpha Cee)(Beta)]{Eee})";
+                        WHERE TAG ([(Ei Si)(Bi)]{I})";
             QueryTokens qt = new QueryTokens();
             int caret = 0;
             bool successful = SyntaxP.Fixed_StateSelect(query, ref caret, ref qt);
@@ -756,7 +756,7 @@ namespace StellaQL
             Assert.AreEqual("", qt.To_FullnameRegex);
             Assert.AreEqual("", qt.To_Tag);
             Assert.AreEqual("", qt.Where_FullnameRegex);
-            Assert.AreEqual("([(Alpha Cee)(Beta)]{Eee})", qt.Where_Tag);
+            Assert.AreEqual("([(Ei Si)(Bi)]{I})", qt.Where_Tag);
             Assert.AreEqual("", qt.The);
         }
 

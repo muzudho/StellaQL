@@ -69,6 +69,7 @@ Step 5
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
+    # Step 5
     TRANSITION INSERT
     FROM ""Base Layer\.Cat""
     TO   ""Base Layer\.Dog""
@@ -86,7 +87,7 @@ Step 6
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
-    # Hi!
+    # Step 6
     TRANSITION INSERT
     FROM ""Base Layer\.Foo""
     TO   ""Base Layer\..*[Nn].*""
@@ -104,8 +105,14 @@ Step 7
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
-    # Are you fine?
-    TRANSITION SELECT FROM ""Base Layer\.Foo"" TO "".*"" THE Zoo001
+    # Step 7
+    TRANSITION SELECT
+    FROM
+        ""Base Layer\.Foo""
+    TO
+        "".*""
+    THE
+        Zoo001
 
     そして、Executeボタンを押してください。
     Then press the Execute button.
@@ -123,12 +130,11 @@ Step 8
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
-    # I am a great tool!
+    # Step 8
     TRANSITION UPDATE
     SET
         exitTime 1.0
         duration 0
-        tag ""Enjoy programming!""
     FROM
         ""Base Layer\.Foo""
     TO
@@ -156,8 +162,8 @@ Step 9
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
-    # This line is a comment!
-            TRANSITION DELETE
+    # Step 9
+    TRANSITION DELETE
     FROM ""Base Layer\.Foo""
     TO   ""Base Layer\..*""
 
@@ -177,6 +183,7 @@ Step 10
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
+    # Step 10
     STATE UPDATE
     SET
         speedParameterActive true
@@ -188,8 +195,8 @@ Step 10
     そして、Executeボタンを押してください。
     Then press the Execute button.
 
-    Inspector ウィンドウを見てプロパティーが更新されていることを確認してください。
-    Please check the Inspector window and make sure the properties are updated.
+    Inspector ウィンドウを見て猫ステートのプロパティーが更新されていることを確認してください。
+    Please check the Inspector window and check that the property of the cat state is updated.
 
 
 手順11
@@ -198,6 +205,7 @@ Step 11
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
+    # Step 11
     STATE INSERT
     WORDS
         WhiteAlpaca
@@ -219,6 +227,7 @@ Step 12
     次の文をクエリー・テキストボックスに入力してください。
     Please enter the following statement in the Query text box.
 
+    # Step 12
     STATE DELETE
     WORDS
         "".*(White).*""
@@ -230,6 +239,156 @@ Step 12
 
     名前に White を含むステートが削除されました。
     A state including White in the name has been deleted.
+
+
+手順13
+Step 13
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 13
+    TRANSITION INSERT
+    FROM TAG ( Ei I )
+    TO   ""Base Layer\.Foo""
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    A と E を含む動物から Foo に線が引かれました。
+    A line from Foo was drawn from animals including A and E.
+
+    丸括弧は全てのタグに一致するものを探します。
+    Parentheses look for matches for all tags.
+
+手順14
+Step 14
+
+    Projectウィンドウから Assets / StellaQL / AnimatorControllers / Demo_Zoo をダブルクリックしてC#スクリプト・ファイルを開いてください。
+    Double click Assets / StellaQL / AnimatorControllers / Demo_Zoo from the Project window to open the C# script file.
+
+    ステートに１つ１つタグを設定しています。エイ、ビー、シー...
+    I set the tag one by one in the state.Ei, Bi, Si...
+
+    このタグはUnityとは関係なく、ただの文字列です。
+    This tag is just a character string, regardless of Unity.
+
+    ユニティーエディターに戻ってください。
+    Please return to the unity editor.
+
+
+手順15
+Step 15
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 15
+    TRANSITION INSERT
+    FROM ""Base Layer\.Foo""
+    TO TAG [ Eks Uai Zi ]
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    Foo から X と Y と Z のいずれかを含む動物に線が引かれました。
+    A line was drawn from animals containing X, Y and Z from Foo.
+
+    角括弧は１つでもタグが一致するものを探します。
+    We look for something that matches at least one square bracket.
+
+手順16
+Step 16
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 16
+    TRANSITION DELETE
+    FROM ""Base Layer\.Foo""
+    TO   TAG { I Ai Uai }
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    Foo から E と I と Y の１つも含まない動物への線は消されました。
+    The line from Foo to an animal that does not contain E, I and Y is erased.
+
+    中括弧はタグが１つも一致しないものを探します。
+    Curly braces look for matches that do not match any tags.
+
+
+手順17
+Step 17
+
+    一旦 全てのトランザクションを消しましょう。
+    Let's delete all transactions once.
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 17
+    TRANSITION DELETE
+    FROM "".*""
+    TO   "".*""
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    全てのトランザクションが削除されました。
+    All transactions have been deleted.
+
+
+手順18
+Step 18
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 18
+    TRANSITION INSERT
+    FROM ""Base Layer\.Foo""
+    TO TAG ( [ Ei Ou ] { I } )
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    Fooから、A か O を含み、E は含まない動物へ線が引かれました。
+    From Foo, lines were drawn from animals containing A or O, but not E.
+
+    タグは囲ってください。  ((A B ) (C) ) はＯＫ。((A B ) C ) はダメ。
+    Please surround the tag. ((A B) (C)) is OK. ((A B) C) is not good.
+
+
+手順19
+Step 19
+
+    難しい場合はセミコロンで命令文を分けましょう。
+    If it is difficult, let's divide the statement with a semicolon.
+
+    もう一度、全てのトランザクションを消します。
+    Turn off all transactions again.
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 19
+    TRANSITION DELETE FROM "".*"" TO "".*"";
+    TRANSITION INSERT FROM ""Base Layer\.Foo"" TO TAG [ Ei Ou ];
+    TRANSITION DELETE FROM ""Base Layer\.Foo"" TO TAG ( I ) ;
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    Fooから、A か O を含み、E は含まない動物へ線が引かれました。
+    From Foo, lines were drawn from animals containing A or O, but not E.
+
+
+基本操作の説明は以上です。
+The explanation of the basic operation is above.
+
+その他のクエリーは、コマンド リファレンスボタンを押して調べてください。
+For other queries, please check by pressing the command reference button.
 ");
             contents.AppendLine(@"");
             contents.AppendLine(@"サンキュー☆（＾ｑ＾）");

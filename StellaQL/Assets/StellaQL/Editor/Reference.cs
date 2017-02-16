@@ -220,8 +220,8 @@ namespace StellaQL
             contents.AppendLine(@"");
             contents.AppendLine(@"    # タグ (""AND"" 操作)");
             contents.AppendLine(@"    # Tag (""AND"" operation)");
-            contents.AppendLine(@"    FROM TAG ( Alpha Beta )");
-            contents.AppendLine(@"    TO TAG ( Cee Dee )");
+            contents.AppendLine(@"    FROM TAG ( Ei Bi )");
+            contents.AppendLine(@"    TO TAG ( Si Di )");
             contents.AppendLine(@"");
             contents.AppendLine(@"    # - タグは Unityのタグではなく、StellaQLのタグです。 C#のソースに定数で書いておいてください。");
             contents.AppendLine(@"    # - Tag is not unity tags. It's StellaQL tags. Please, read C# program. It's const string.");
@@ -249,8 +249,8 @@ namespace StellaQL
             contents.AppendLine(@"");
             contents.AppendLine(@"    # タグ (""OR"" 操作)");
             contents.AppendLine(@"    # Tag (""OR"" operation)");
-            contents.AppendLine(@"    FROM TAG [ Alpha Beta ]");
-            contents.AppendLine(@"    TO TAG [ Cee Dee ]");
+            contents.AppendLine(@"    FROM TAG [ Ei Bi ]");
+            contents.AppendLine(@"    TO TAG [ Si Di ]");
             contents.AppendLine(@"");
             contents.AppendLine(@"    # [ ] は、どれか１つでも一致検索。");
             contents.AppendLine(@"    # [ ] is choice anything words.");
@@ -259,8 +259,8 @@ namespace StellaQL
             contents.AppendLine(@"");
             contents.AppendLine(@"    # タグ (""NOT"" 操作)");
             contents.AppendLine(@"    # Tag (""NOT"" operation)");
-            contents.AppendLine(@"    FROM TAG { Alpha Beta }");
-            contents.AppendLine(@"    TO TAG { Cee Dee }");
+            contents.AppendLine(@"    FROM TAG { Ei Bi }");
+            contents.AppendLine(@"    TO TAG { Si Di }");
             contents.AppendLine(@"");
             contents.AppendLine(@"    # { } は、１つも一致しない検索。");
             contents.AppendLine(@"    # { } is not choice everything words.");

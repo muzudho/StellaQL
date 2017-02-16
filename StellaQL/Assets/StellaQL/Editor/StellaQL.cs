@@ -235,7 +235,7 @@ namespace StellaQL
                     }
                 case SyntaxP.Pattern.TransitionUpdate:
                     {
-                        foreach (KeyValuePair<string, string> pair in qt.Set) { info_message.AppendLine(pair.Key + "=" + pair.Value); }
+                        //foreach (KeyValuePair<string, string> pair in qt.Set) { info_message.AppendLine(pair.Key + "=" + pair.Value); }
                         Operation_Transition.Update(ac,
                             Fetcher.States(ac, RecordsFilter.Qt_From(qt, universe, info_message), universe),
                             Fetcher.States(ac, RecordsFilter.Qt_To(qt, universe, info_message), universe),
