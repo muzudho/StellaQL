@@ -97,6 +97,8 @@ An abstract class is automatically generated in the same folder as the animator 
 (2) Demo_Zoo.cs ファイルを参考に、自動生成された抽象クラスを継承して、クラスを作ってください。  
 Please refer to the Demo_Zoo.cs file, inherit the automatically generated abstract class and create a class.  
 
+![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160807a7b.png?raw=true)  
+
 (3) Assets/StellaQL/UserDefinedDatabase.cs ファイルを開いてください。  
 Open the Assets/StellaQL/UserDefinedDatabase.cs file.  
 
