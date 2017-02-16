@@ -1,5 +1,5 @@
 ﻿# Table of content
-- ステラキューエルとは？ [What is StellaQL?](#What_is_StellaQL)
+- ステラキューエルとは？ [What is StellaQL?](#What is StellaQL?)
 
 # What is StellaQL?
 **ステラキューエルとは？**
