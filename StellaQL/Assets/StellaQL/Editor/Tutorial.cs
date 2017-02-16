@@ -384,6 +384,112 @@ Step 19
     From Foo, lines were drawn from animals containing A or O, but not E.
 
 
+手順20
+Step 20
+
+    もう一度、全てのトランザクションを消し、猫ステートを設定し直します。
+    Once again, turn off all transactions and set cat state again.
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 20
+    TRANSITION DELETE FROM "".* "" TO "".* "" ;
+    STATE UPDATE SET speedParameterActive false speedParameter """" speed 1 WHERE ""Base Layer\.Cat""
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    チュートリアルの最初の状態に戻ったことでしょう。
+    You will have returned to the initial state of the tutorial.
+
+
+手順21
+Step 21
+
+    次の文をクエリー・テキストボックスに入力してください。
+    Please enter the following statement in the Query text box.
+
+    # Step 21
+    TRANSITION INSERT FROM ""Base Layer\.Alpaca""     TO ""Base Layer\.Alpaca""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Bear""       TO ""Base Layer\.Rabbit""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Cat""        TO ""Base Layer\.Tiger""      ;
+    TRANSITION INSERT FROM ""Base Layer\.Dog""        TO ""Base Layer\.Giraffe""    ;
+    TRANSITION INSERT FROM ""Base Layer\.Elephant""   TO ""Base Layer\.Tiger""      ;
+    TRANSITION INSERT FROM ""Base Layer\.Fox""        TO ""Base Layer\.Xenopus""    ;
+    TRANSITION INSERT FROM ""Base Layer\.Giraffe""    TO ""Base Layer\.Elephant""   ;
+    TRANSITION INSERT FROM ""Base Layer\.Horse""      TO ""Base Layer\.Elephant""   ;
+    TRANSITION INSERT FROM ""Base Layer\.Iguana""     TO ""Base Layer\.Alpaca""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Jellyfish""  TO ""Base Layer\.Horse""      ;
+    TRANSITION INSERT FROM ""Base Layer\.Kangaroo""   TO ""Base Layer\.Ox""         ;
+    TRANSITION INSERT FROM ""Base Layer\.Lion""       TO ""Base Layer\.Nutria""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Monkey""     TO ""Base Layer\.Yak""        ;
+    TRANSITION INSERT FROM ""Base Layer\.Nutria""     TO ""Base Layer\.Alpaca""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Ox""         TO ""Base Layer\.Xenopus""    ;
+    TRANSITION INSERT FROM ""Base Layer\.Pig""        TO ""Base Layer\.Giraffe""    ;
+    TRANSITION INSERT FROM ""Base Layer\.Quetzal""    TO ""Base Layer\.Lion""       ;
+    TRANSITION INSERT FROM ""Base Layer\.Rabbit""     TO ""Base Layer\.Tiger""      ;
+    TRANSITION INSERT FROM ""Base Layer\.Sheep""      TO ""Base Layer\.Pig""        ;
+    TRANSITION INSERT FROM ""Base Layer\.Tiger""      TO ""Base Layer\.Rabbit""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Unicorn""    TO ""Base Layer\.Nutria""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Vixen""      TO ""Base Layer\.Nutria""     ;
+    TRANSITION INSERT FROM ""Base Layer\.Wolf""       TO ""Base Layer\.Fox""        ;
+    TRANSITION INSERT FROM ""Base Layer\.Xenopus""    TO ""Base Layer\.Sheep""      ;
+    TRANSITION INSERT FROM ""Base Layer\.Yak""        TO ""Base Layer\.Kangaroo""   ;
+    TRANSITION INSERT FROM ""Base Layer\.Zebra""      TO ""Base Layer\.Alpaca""     ;
+
+    そして、Executeボタンを押してください。
+    Then press the Execute button.
+
+    しりとりを作りました。
+    I made a word chain.
+
+
+手順22
+Step 22
+
+    [Export spread sheet]ボタンを押してください。
+    Please press the[Export spread sheet] button.
+
+   プロジェクト・フォルダーの中に いくつかのCSVファイルが出力されます。
+    Several CSV files are output in the project folder.
+
+
+手順23
+Step 23
+
+    プロジェクト・フォルダーに置いてある StellaQL_MacroApplication.ods ファイルを開いてください。
+    Please open the StellaQL_MacroApplication.ods file in the project folder.
+
+    マクロを有効化してください。
+    Activate the macro.
+
+    StellaQL_MacroApplication.ods ファイルに書かれている手順に沿って進んでください。
+    Follow the instructions in the StellaQL_MacroApplication.ods file.
+
+    例えば、ビュー・ドキュメントの transitionsシートを編集してみてください。
+    For example, try editing the transitions sheet of the view document.
+
+    Base Layer.Bear から Base Layer.Rabbit へとつなぐトランジションの duration 0.1 を 0 にするのもいいでしょう。
+    It is a good idea to set the duration 0.1 of the transition from Base Layer.Bear to Base Layer.Rabbit to 0.
+
+    手順を最後まで終えると、インポート用のCSVファイルが１つ作られます。
+    After completing the procedure, one import CSV file will be created.
+
+
+手順24
+Step 24
+
+    必ず、あなたのUnityのプロジェクトを丸ごとバックアップを取っておいてください。
+    Be sure to keep a backup of your Unity project altogether.
+
+    [Import spread sheet]ボタンを押してください。
+    Please press the[Import spread sheet] button.
+
+   例えば Base Layer.Bear から Base Layer.Rabbit へとつなぐトランジションの duration が 0 になっていることを確認してください。
+    For example, please check that the duration of the transition from Base Layer.Bear to Base Layer.Rabbit is 0.
+
+
 基本操作の説明は以上です。
 The explanation of the basic operation is above.
 

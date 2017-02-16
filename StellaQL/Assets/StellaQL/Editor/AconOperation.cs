@@ -698,7 +698,7 @@ namespace StellaQL
         /// <param name="path_src">ex. "Base Layer.JMove.JMove0"</param>
         public static void Insert(AnimatorController ac, HashSet<AnimatorState> states_src, HashSet<AnimatorState> states_dst, Dictionary<string, string> properties, StringBuilder info_message)
         {
-            info_message.Append("Transition.Insert: Source "); info_message.Append(states_src.Count); info_message.Append(" states. Destination "); info_message.Append(states_dst.Count); info_message.AppendLine(" states.");
+            // info_message.Append("Transition.Insert: Source "); info_message.Append(states_src.Count); info_message.Append(" states. Destination "); info_message.Append(states_dst.Count); info_message.AppendLine(" states.");
             foreach (AnimatorState state_src in states_src) {
                 foreach (AnimatorState state_dst in states_dst) {
                     AnimatorStateTransition transition = state_src.AddTransition(state_dst);
