@@ -17,7 +17,10 @@ namespace StellaQL
             SourceAc = ac;
 
             CopiedLayers = new List<AnimatorControllerLayer>();
-            foreach (AnimatorControllerLayer actualLayer in ac.layers) // I guess, Layer's setter does not work. I use copy.
+
+            // レイヤーのセッターは機能していない？　コピーを作って使うことにする。
+            // I guess, Layer's setter does not work. I use copy.
+            foreach (AnimatorControllerLayer actualLayer in ac.layers)
             {
                 AnimatorControllerLayer copiedLayer = AconDeepcopy.DeepcopyLayer(actualLayer);
                 CopiedLayers.Add(copiedLayer);
@@ -37,10 +40,12 @@ namespace StellaQL
             Bool,
             String,
             /// <summary>
+            /// 実装がハードコーディングされている文字列。
             /// For hard coding.
             /// </summary>
             SpecialString,
             /// <summary>
+            /// 対応していないフィールド。
             /// For not supported field.
             /// </summary>
             Other,
@@ -49,6 +54,7 @@ namespace StellaQL
         public enum SubFieldType
         {
             /// <summary>
+            /// TODO: スプレッドシートで、文字列型のClear欄を非表示にする。用意はしてみたものの、使う場面がない……。
             /// TODO: For invisible Clear field. (Spreadsheet) But, I do not use it.
             /// </summary>
             Required,
@@ -58,26 +64,32 @@ namespace StellaQL
         public enum KeyType
         {
             /// <summary>
+            /// StellaQLスプレッドシートで使う、一時的なナンバリング
             /// Temporary numbering to use with Spreadsheet.
             /// </summary>
             TemporaryNumbering,
             /// <summary>
+            /// Unityで識別子に使えそうなもの
             /// What Unity can use as an identifier.
             /// </summary>
             Identifiable,
             /// <summary>
+            /// スプレッドシートで読取専用フィールドにしたい場合これ。
             /// Make it a read-only field in a spreadsheet.
             /// </summary>
             ReadOnly,
             /// <summary>
+            /// ユニティ・エディターが書込みに対応していない場合はこれ。
             /// This is when unity editor does not support writing.
             /// </summary>
             UnityEditorDoesNotSupportWriting,
             /// <summary>
+            /// StellaQL側で書き込みに対応していない場合はこれ。
             /// This is when StellaQL side does not support writing.
             /// </summary>
             StellaQLSpreadsheetDoesNotSupportWriting,
             /// <summary>
+            /// それ以外
             /// other than that.
             /// </summary>
             None,
@@ -117,51 +129,71 @@ namespace StellaQL
         }
 
         /// <summary>
+        /// 列名。
         /// Column name.
         /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
+        /// 型。
         /// Value type.
         /// </summary>
         public FieldType Type { get; private set; }
         public SubFieldType SubType { get; private set; }
 
         /// <summary>
+        /// 列の種類。
         /// Value type. attribute.
         /// </summary>
         public KeyType KeyField { get; private set; }
 
         /// <summary>
+        /// スプレッド・シートから入力可能か
         /// Columns visible in spreadsheets.
         /// </summary>
         public bool Input { get; private set; }
 
         /// <summary>
+        /// 列の記入漏れを防ぐために　ひとくくりにしています。
         /// To prevent missing of the column.
         /// </summary>
         public void AppendCsv(Dictionary<string, object> fields, StringBuilder contents, bool outputColumnName, bool outputDefinition)
         {
-            if (outputDefinition) // Output one column definition column.
+            // 列定義一列分を出力するなら
+            // Output one column definition column.
+            if (outputDefinition)
             {
-                if (outputColumnName) // Output column names.
+                // 列名を出力するなら
+                // Output column names.
+                if (outputColumnName)
                 {
                 }
                 else
                 {
                     contents.Append(Name); contents.Append(",");
-                    contents.Append(Type.ToString().Substring(0, 1).ToLower()); // First letter. Make the beginning of element name of enumerated type lowercase, and make it type name.
-                    contents.Append(Type.ToString().Substring(1));              // After the second character.
+
+                    // １文字目。列挙型の要素名の先頭を小文字にして、型名とする。
+                    // First letter. Make the beginning of element name of enumerated type lowercase, and make it type name.
+                    contents.Append(Type.ToString().Substring(0, 1).ToLower());
+
+                    // ２文字目以降。
+                    // After the second character.
+                    contents.Append(Type.ToString().Substring(1));
                     contents.Append(",");
+
                     contents.Append(KeyField); contents.Append(",");
                     contents.Append(Input); contents.Append(",");
-                    contents.Append(SubType); contents.Append(",");             // 2017-02-14 Add.
+                    contents.Append(SubType); contents.Append(",");             // 2017-02-14 追加Add.
                     contents.AppendLine();
                 }
             }
-            else // If it outputs 1 field.
+            // 1フィールド分を出力するなら
+            // If it outputs 1 field.
+            else
             {
-                if (outputColumnName) // Output column names.
+                // 列名を出力するなら
+                // Output column names.
+                if (outputColumnName)
                 {
                     switch (this.Type)
                     {
@@ -189,7 +221,9 @@ namespace StellaQL
         }
         public static void AppendDefinitionHeader(StringBuilder contents)
         {
-            contents.AppendLine("Name,Type,KeyField,Input,SubType,[EOL],"); // Column definition header output
+            // 列定義ヘッダー出力
+            // Column definition header output
+            contents.AppendLine("Name,Type,KeyField,Input,SubType,[EOL],");
         }
 
         public delegate bool   GettterBool  (object instance);                  GettterBool m_getterBool;
@@ -216,9 +250,11 @@ namespace StellaQL
         }
 
         /// <summary>
+        /// 既存のオブジェクトのプロパティー更新の場合、これを使う。
         /// This is used for property update of existing objects.
         /// </summary>
-        /// <param name="instance">Or wrapper. ex. Statemachine, Chlid state, Condition, Position, etc.</param>
+        /// <param name="instance">ステートマシン、チャイルド・ステート、コンディション・ラッパー、ポジション・ラッパー等
+        /// Or wrapper. ex. Statemachine, Chlid state, Condition, Position, etc.</param>
         public void Update(object instance, DataManipulationRecord record, StringBuilder message)
         {
             if (null == instance) { throw new UnityException("Instance is null."); }
@@ -238,12 +274,17 @@ namespace StellaQL
                         int actual = m_getterInt(instance);
                         if (EqualsOld(actual, record.OldInt)) { m_setterInt(instance, record.NewInt); }
                     } break;
-                case FieldType.Other: break; // Not supported type.
+                // 未対応は、この型にしてある
+                // Not supported type.
+                case FieldType.Other: break;
+
                 case FieldType.String: {
                         if (null == m_getterString) { throw new UnityException("m_getterString is null."); }
                         string actual = m_getterString(instance);
                         if (EqualsOld(actual, record.Old)) {
-                            if (record.IsClear) { m_setterString(instance, ""); } // To empty.
+                            // 空文字列にセットする
+                            // To empty.
+                            if (record.IsClear) { m_setterString(instance, ""); }
                             else { m_setterString(instance, record.New); }
                         }
                     } break;
@@ -253,6 +294,7 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// パラメーター
     /// Parameter.
     /// </summary>
     public class ParameterRecord
@@ -300,8 +342,8 @@ namespace StellaQL
             this.Fields = new Dictionary<string, object>()
             {
                 { "num"             ,num                },
-                { "#name_ID#"       ,name               }, // for key.
-                { "name"            ,name               }, // for edit.
+                { "#name_ID#"       ,name               }, // ID用 for key.
+                { "name"            ,name               }, // 編集用 for edit.
                 { "#type_String#"   ,type.ToString()    },
                 { "defaultBool"     ,numberBool         },
                 { "defaultFloat"    ,numberFloat        },
@@ -311,9 +353,12 @@ namespace StellaQL
         }
         public Dictionary<string, object> Fields { get; set; }
 
-        /// <param name="c">contents</param>
-        /// <param name="n">output column name</param>
-        /// <param name="d">output definition</param>
+        /// <param name="c">コンテンツ
+        /// contents</param>
+        /// <param name="n">列名出力
+        /// output column name</param>
+        /// <param name="d">列定義出力
+        /// output definition</param>
         public void AppendCsvLine(StringBuilder c, bool n, bool d)
         {
             Definitions["num"           ].AppendCsv(Fields, c, n, d);
@@ -330,11 +375,13 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// レイヤー
     /// Layer.
     /// </summary>
     public class LayerRecord
     {
         /// <summary>
+        /// レイヤーのコピーを渡されても更新できないので、アニメーション・コントローラーも一緒に渡そうというもの。
         /// Since it is impossible to update even if a copy of the layer is passed, it is something to pass animation controller together.
         /// </summary>
         public class LayerWrapper
@@ -353,6 +400,7 @@ namespace StellaQL
         {
             List<RecordDefinition> temp = new List<RecordDefinition>()
             {
+                // #で囲んでいるのは、StellaQL用のフィールド。文字列検索しやすいように単語を # で挟んでいる。
                 // The word is sandwiched with # for easier character string searching. For spreadsheet.
                 new RecordDefinition("#layerNum#"               ,RecordDefinition.FieldType.Int     ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.TemporaryNumbering    ,false),
                 new RecordDefinition("name"                     ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.Identifiable          ,false),
@@ -366,6 +414,7 @@ namespace StellaQL
                         if(null==value) { throw new UnityException("Not found ["+v+"] avatar mask."); }
                         ((LayerWrapper)i).SourceAcWrapper.SourceAc.layers[((LayerWrapper)i).LayerIndex].avatarMask = value;
                         // Operation_Layer.DumpLog(((LayerWrapper)i).SourceAcWrapper);
+                        // TODO: Delete にも対応したい。
                         // TODO: I also want to correspond to Delete.
                     }),
                 new RecordDefinition("#blendingMode_string#"    ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.UnityEditorDoesNotSupportWriting
@@ -452,6 +501,7 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// ステートマシン
     /// Statemachine.
     /// </summary>
     public class StatemachineRecord
@@ -461,7 +511,8 @@ namespace StellaQL
             /// 
             /// </summary>
             /// <param name="source"></param>
-            /// <param name="statemachinePath">If "Base Layer.Alpaca.Bear.Cat.Dog", It is "Alpaca.Bear.Cat".</param>
+            /// <param name="statemachinePath">例えばフルパスが "Base Layer.Alpaca.Bear.Cat.Dog" のとき、"Alpaca.Bear.Cat"。
+            /// If "Base Layer.Alpaca.Bear.Cat.Dog", It is "Alpaca.Bear.Cat".</param>
             public Wrapper(AnimatorStateMachine source, string statemachinePath)
             {
                 Source = source;
@@ -476,7 +527,6 @@ namespace StellaQL
         {
             List<RecordDefinition> temp = new List<RecordDefinition>()
             {
-                // The word is sandwiched with # for easier character string searching. For spreadsheet.
                 new RecordDefinition("#layerNum#"                   ,RecordDefinition.FieldType.Int     ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.TemporaryNumbering,false),
                 new RecordDefinition("#machineStateNum#"            ,RecordDefinition.FieldType.Int     ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.TemporaryNumbering,false),
                 new RecordDefinition("#layerName#"                  ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.Identifiable      ,false), // Empty.
@@ -540,9 +590,6 @@ namespace StellaQL
         }
         public Dictionary<string, object> Fields { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="c">contents</param>
         /// <param name="n">output column name</param>
         /// <param name="d">output definition</param>
@@ -564,6 +611,7 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// ステート
     /// State.
     /// </summary>
     public class StateRecord
@@ -644,9 +692,6 @@ namespace StellaQL
         }
         public Dictionary<string, object> Fields { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="c">contents</param>
         /// <param name="n">output column name</param>
         /// <param name="d">output definition</param>
@@ -678,7 +723,10 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// トランジション
     /// Transition.
+    /// 
+    /// (コンディションは別)
     /// (Condition separately)
     /// </summary>
     public class TransitionRecord
@@ -752,9 +800,6 @@ namespace StellaQL
         }
         public Dictionary<string, object> Fields { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="c">contents</param>
         /// <param name="n">output column name</param>
         /// <param name="d">output definition</param>
@@ -790,6 +835,7 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// UnityEditor の AnimatorCondition のセッターが機能していないと推測を立て、別途用意。
     /// I guess, AnimatorCondition's setter does not work. I use copy.
     /// </summary>
     public class AconConditionBuilder
@@ -806,16 +852,19 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// コンディション
     /// Condition.
     /// </summary>
     public class ConditionRecord
     {
         /// <summary>
+        /// struct を object に渡したいときに使うラッパー
         /// A wrapper to use when you want to pass a struct to object.
         /// </summary>
         public class AnimatorConditionWrapper
         {
             /// <summary>
+            /// 空コンストラクタで生成した場合、.IsNull( ) メソッドでヌルを返す。
             /// If it is generated with an empty constructor, it returns null in the .IsNull () method.
             /// </summary>
             public AnimatorConditionWrapper()
@@ -837,6 +886,7 @@ namespace StellaQL
             public bool IsNull { get; private set; }
             public int ConditionNum { get; private set; }
             /// <summary>
+            /// コンディションへの更新を反映するためには、親トランジションの AddCondition( ) メソッドが必要なようだ。
             /// In order to reflect the update to the condition, it seems necessary to have a parent transition AddCondition () method.
             /// </summary>
             public AnimatorStateTransition m_sourceParentTransition;
@@ -844,6 +894,7 @@ namespace StellaQL
         }
 
         /// <summary>
+        /// モードには、数値型のときは演算子が入っているし、論理値型のときは論理値が入っている。
         /// The mode contains operators for numeric types, and logical values for logical types.
         /// </summary>
         public static string Mode_to_string(AnimatorConditionMode mode)
@@ -862,6 +913,7 @@ namespace StellaQL
             }
         }
         /// <summary>
+        /// モードには、数値型のときは演算子が入っているし、論理値型のときは論理値が入っている。
         /// The mode contains operators for numeric types, and logical values for logical types.
         /// </summary>
         public static AnimatorConditionMode String_to_mode(string modeString)
@@ -894,10 +946,14 @@ namespace StellaQL
                 new RecordDefinition("#stateName#"          ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.Identifiable          ,false  ),
 
                 // FIXME:
+                // トランジションの持っているコンディションは、全削除、全追加しないと、プロパティ１つ変えられないようだ。（セッターが機能していない）
+                // また、コンディションの変更を反映するためには、親トランジションが必要。
+                // プロパティを１つずつ変えるのは　処理時間の無駄が膨大だが、　今バージョンはこれでいくものとする。
                 // It seems that you can not change one property unless you delete the whole condition, add all the conditions that the transition has. (Setter is not functioning)
                 // Also, in order to reflect the change of condition, parent transition is necessary.
                 // Changing the properties one by one has tremendous waste of processing time, but the version is supposed to do this now.
 
+                // parameter, mode, threshold の順に並べた方が、理解しやすい。
                 // parameter, mode, threshold
                 new RecordDefinition("parameter"            ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None
                     ,(object i)=>{
@@ -912,6 +968,10 @@ namespace StellaQL
                             );
                     }
                 ),
+
+                // 演算子。本来はイニューム型だが、文字列型にする。
+                // 値は本来は Greater,less,Equals,NotEqual,If,IfNot の６つだが、分かりづらいので >, <, =, <>, TRUE, FALSE の６つにする。
+
                 // operator. Originally it is an enum type, but it is a character string type.
                 // Since the value is originally six, Greater,less,Equals,NotEqual,If,IfNot.
                 // it is difficult to understand, so make it six, >, <, =, <>, TRUE, FALSE.
@@ -965,9 +1025,6 @@ namespace StellaQL
         }
         public Dictionary<string, object> Fields { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="c">contents</param>
         /// <param name="n">output column name</param>
         /// <param name="d">output definition</param>
@@ -990,13 +1047,16 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// ポジション
     /// Position.
     /// </summary>
     public class PositionRecord
     {
         /// <summary>
+        /// struct を object に渡したいときに使うラッパー
         /// A wrapper to use when you want to pass a struct to object.
         /// 
+        /// ステートマシンと、ステートでは処理が異なる
         /// Processing is different in state machine and state.
         /// </summary>
         public class PositionWrapper
@@ -1197,9 +1257,6 @@ namespace StellaQL
         }
         public Dictionary<string, object> Fields { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="c">contents</param>
         /// <param name="n">output column name</param>
         /// <param name="d">output definition</param>
@@ -1259,12 +1316,18 @@ namespace StellaQL
             StringBuilder contents = new StringBuilder();
             if (outputDefinition)
             {
-                RecordDefinition.AppendDefinitionHeader(contents); // Column definition header output
-                ParameterRecord.Empty.AppendCsvLine(contents, false, outputDefinition); // Column definition output
+                // 列定義ヘッダー出力
+                // Column definition header output
+                RecordDefinition.AppendDefinitionHeader(contents);
+                // 列名出力
+                // Column definition output
+                ParameterRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else
             {
-                ParameterRecord.Empty.AppendCsvLine(contents, true, outputDefinition); // Column name output
+                // 列名出力
+                // Column name output
+                ParameterRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
                 foreach (ParameterRecord record in aconData.table_parameter) { record.AppendCsvLine(contents, false, outputDefinition); }
             }
 
@@ -1277,12 +1340,12 @@ namespace StellaQL
             StringBuilder contents = new StringBuilder();
 
             if (outputDefinition) {
-                RecordDefinition.AppendDefinitionHeader(contents); // Column definition header output
-                LayerRecord.Empty.AppendCsvLine(contents, false, outputDefinition); // Column definition output
+                RecordDefinition.AppendDefinitionHeader(contents);
+                LayerRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else
             {
-                LayerRecord.Empty.AppendCsvLine(contents, true, outputDefinition); // Column name output
+                LayerRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
                 foreach (LayerRecord record in aconData.table_layer) { record.AppendCsvLine(contents, false, outputDefinition); }
             }
 
@@ -1296,11 +1359,11 @@ namespace StellaQL
 
             if (outputDefinition)
             {
-                RecordDefinition.AppendDefinitionHeader(contents); // Column definition header output
-                StatemachineRecord.Empty.AppendCsvLine(contents, false, outputDefinition); // Column definition output
+                RecordDefinition.AppendDefinitionHeader(contents);
+                StatemachineRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else {
-                StatemachineRecord.Empty.AppendCsvLine(contents, true, outputDefinition); // Column name output
+                StatemachineRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
                 foreach (StatemachineRecord record in aconData.table_statemachine) { record.AppendCsvLine(contents, false, outputDefinition); }
             }
 
@@ -1312,11 +1375,11 @@ namespace StellaQL
         {
             if (outputDefinition)
             {
-                RecordDefinition.AppendDefinitionHeader(contents); // Column definition header output
-                StateRecord.Empty.AppendCsvLine(contents, false, outputDefinition); // Column definition output
+                RecordDefinition.AppendDefinitionHeader(contents);
+                StateRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else {
-                StateRecord.Empty.AppendCsvLine(contents, true, outputDefinition); // Column name output
+                StateRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
                 foreach (StateRecord stateRecord in table) { stateRecord.AppendCsvLine(contents, false, outputDefinition); }
             }
         }
@@ -1331,13 +1394,15 @@ namespace StellaQL
 
         public static void CreateCsvTable_Transition(HashSet<TransitionRecord> table, bool outputDefinition, StringBuilder contents)
         {
-            if (outputDefinition) // When creating a column definition sheet
+            // 列定義シートを作る場合
+            // When creating a column definition sheet
+            if (outputDefinition)
             {
-                RecordDefinition.AppendDefinitionHeader(contents); // Column definition header output
-                TransitionRecord.Empty.AppendCsvLine(contents, false, outputDefinition); // Column definition output
+                RecordDefinition.AppendDefinitionHeader(contents);
+                TransitionRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else {
-                TransitionRecord.Empty.AppendCsvLine(contents, true, outputDefinition); // Column name output
+                TransitionRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
                 foreach (TransitionRecord record in table) { record.AppendCsvLine(contents, false, outputDefinition); }
             }
         }
@@ -1356,11 +1421,11 @@ namespace StellaQL
 
             if (outputDefinition)
             {
-                RecordDefinition.AppendDefinitionHeader(contents); // Column definition header output
-                ConditionRecord.Empty.AppendCsvLine(contents, false, outputDefinition); // Column definition output
+                RecordDefinition.AppendDefinitionHeader(contents);
+                ConditionRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else {
-                ConditionRecord.Empty.AppendCsvLine(contents, true, outputDefinition); // Column name output
+                ConditionRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
                 foreach (ConditionRecord record in aconData.table_condition) { record.AppendCsvLine(contents, false, outputDefinition); }
             }
 
@@ -1374,11 +1439,11 @@ namespace StellaQL
 
             if (outputDefinition)
             {
-                RecordDefinition.AppendDefinitionHeader(contents); // Column definition header output
-                PositionRecord.Empty.AppendCsvLine(contents, false, outputDefinition); // Column definition output
+                RecordDefinition.AppendDefinitionHeader(contents);
+                PositionRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else {
-                PositionRecord.Empty.AppendCsvLine(contents, true, outputDefinition); // Column name output
+                PositionRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
                 foreach (PositionRecord record in aconData.table_position) { record.AppendCsvLine(contents, false, outputDefinition); }
             }
 

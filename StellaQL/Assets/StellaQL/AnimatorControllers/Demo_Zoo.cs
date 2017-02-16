@@ -1,18 +1,23 @@
 ﻿/// <summary>
+/// 参考
 /// I referred to the following site.
-/// Naming convention : https://docs.unity3d.com/ja/current/Manual/Splittinganimations.html
-/// Naming convention : http://tsubakit1.hateblo.jp/entry/2015/02/03/232316
-/// Alphabet name     : SlideShare「1º week」(P17 SPELLING) http://www.slideshare.net/elsa_magdalena/1-week-14841043
+/// 命名規則 Naming convention : https://docs.unity3d.com/ja/current/Manual/Splittinganimations.html
+/// 命名規則 Naming convention : http://tsubakit1.hateblo.jp/entry/2015/02/03/232316
+/// アルファベット名 Alphabet name : SlideShare「1º week」(P17 SPELLING) http://www.slideshare.net/elsa_magdalena/1-week-14841043
 /// </summary>
 namespace StellaQL.Acons.Demo_Zoo
 {
     /// <summary>
+    /// アニメーター・コントローラー１つに対応するレコード。
     /// This class corresponds to one animator controller.
+    /// 
+    /// 自動生成した抽象クラスを継承してください。
     /// Please inherit the automatically generated abstract class.
     /// </summary>
     public class AControl : Demo_Zoo_AbstractAControl
     {
         /// <summary>
+        /// シングルトン・デザインパターンとして作っています。
         /// I am making this class as a singleton design pattern.
         /// </summary>
         static AControl() { Instance = new AControl(); }
@@ -20,6 +25,7 @@ namespace StellaQL.Acons.Demo_Zoo
 
         #region Tags for query
         /// <summary>
+        /// StellaQLのコマンドライン用タグを作ることができます。
         /// You can define tags for StellaQL query.
         /// </summary>
         public const string
@@ -51,19 +57,33 @@ namespace StellaQL.Acons.Demo_Zoo
             TAG_UAI     = "Uai",    // Y(uai)
             TAG_ZI      = "Zi",     // Z(zi)
             TAG_HORN    = "Horn",
-            TAG_        = "";       // Don't use. Sentinel value for a list that ends with a comma.
+
+            // カンマで終わるリストを作るために最後に置いています。使わないでください。
+            // Don't use. Sentinel value for a list that ends with a comma.
+            TAG_ = "";
         #endregion
 
         AControl() {
-            #region You can set your defined tags to state.
+            #region Tags
+            // あなたの定義したタグをステートに関連付けることができます
+            // You can set your defined tags to state.
             SetTag(BASELAYER_           , new[] { TAG_ZERO });
 
+            //  別のやり方の例。(Another way) もし独自のプロパティーがあって初期化したい場合は、レコードごと上書きしてください。
             // Another way. If you have your own properties and want to initialize, overwrite each record.
             Set(new DefaultAcState(BASELAYER_FOO, new[] { TAG_ZERO }));
 
-            SetTag(BASELAYER_ANYSTATE   , new[] { TAG_ZERO }); // Unlike the blue-green [Any State], the gray [Any State]
-            SetTag(BASELAYER_ENTRY      , new[] { TAG_ZERO }); // Unlike green [Entry], gray [Entry]
-            SetTag(BASELAYER_EXIT       , new[] { TAG_ZERO }); // Unlike red [Exit], gray [Exit]
+            // 青緑色の[Any State]とは違って、灰色の[Any State]
+            // Unlike the blue-green [Any State], the gray [Any State]
+            SetTag(BASELAYER_ANYSTATE   , new[] { TAG_ZERO });
+
+            // 緑色の[Entry]とは違って、灰色の[Entry]
+            // Unlike green [Entry], gray [Entry]
+            SetTag(BASELAYER_ENTRY      , new[] { TAG_ZERO });
+
+            // 赤色の[Exit]とは違って、灰色の[Exit]
+            // Unlike red [Exit], gray [Exit]
+            SetTag(BASELAYER_EXIT       , new[] { TAG_ZERO });
             SetTag(BASELAYER_ALPACA     , new[] { TAG_EI ,TAG_SI    ,TAG_EL     , TAG_PI                                        });
             SetTag(BASELAYER_BEAR       , new[] { TAG_EI ,TAG_BI   ,TAG_I    , TAG_AR                                        });
             SetTag(BASELAYER_CAT        , new[] { TAG_EI ,TAG_SI    ,TAG_TI                                                     });

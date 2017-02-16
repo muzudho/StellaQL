@@ -4,36 +4,51 @@ using UnityEngine;
 namespace StellaQL
 {
     /// <summary>
+    /// アニメーター・ステート１つに対応するレコードです。
     /// This interface is a record corresponding to one animator state.
     /// </summary>
     public interface AcStateRecordable
     {
         /// <summary>
-        /// It ends with a dot "." . It does not contain leaf node (state name).
+        /// 末尾にドットを含む
+        /// It ends with a dot ".".
+        /// 
+        /// （葉を含まない）
+        /// It does not contain leaf node (state name).
+        /// 
         /// ex. "Base Layer.Japan."
         /// </summary>
         string GetBreadCrumb();
         /// <summary>
-        /// Statemachine name or state name. This is a label of box.
+        /// ステートマシン名、ステート名（葉より上のノード含まない）
+        /// Statemachine name or state name.
+        /// 
+        /// 箱のラベルです。
+        /// This is a label of box.
         /// </summary>
         string Name { get; }
         /// <summary>
+        /// ステートマシン名、ステート名のフルパス
         /// Statemachine full path or state full path.
         /// </summary>
         string Fullpath { get; }
         /// <summary>
+        /// ステートマシン名、ステート名のフルパスのハッシュ
         /// Fullpath hash.
         /// </summary>
         int FullPathHash { get; }
         /// <summary>
-        /// Your defined tags.
+        /// ユーザー定義タグのハッシュ。
+        /// Your defined tags hash.
         /// </summary>
         HashSet<int> Tags { get; set; }
         /// <summary>
+        /// （オプション）アニメーションの種類。使わなくても可。
         /// (Option) for 2D fighting game.
         /// </summary>
         int Cliptype { get; set; }
         /// <summary>
+        /// ユーザー定義タグのハッシュを全て含むか
         /// True if it contains all tags.
         /// </summary>
         /// <param name="requiredAllTags_hash"></param>
@@ -42,22 +57,31 @@ namespace StellaQL
     }
 
     /// <summary>
+    /// アニメーター・ステート１つに対応するレコード。
     /// This abstract class is a record corresponding to one animator state.
     /// </summary>
     public abstract class AbstractAcState : AcStateRecordable
     {
-        /// <param name="fullpath">Statemachine or state.</param>
-        /// <param name="tags">Your defined tags.</param>
+        /// <param name="fullpath">ステートマシン名、ステート名のフルパス
+        /// Statemachine or state.</param>
+        /// <param name="tags">ユーザー定義タグ
+        /// Your defined tags.</param>
         public AbstractAcState(string fullpath, string[] tags)
         {
             Fullpath = fullpath;
-            Name = Fullpath.Substring(Fullpath.LastIndexOf('.') + 1); // Does not include dots.
+
+            // ドットを含まない
+            // Does not include dots.
+            Name = Fullpath.Substring(Fullpath.LastIndexOf('.') + 1);
+
             FullPathHash = Animator.StringToHash(fullpath);
             Tags = Code.Hashes(tags);
         }
 
         public string GetBreadCrumb() {
-            return Fullpath.Substring(0, Fullpath.LastIndexOf('.') + 1);// It ends with a dot.
+            // 末尾にドットを含む
+            // It ends with a dot.
+            return Fullpath.Substring(0, Fullpath.LastIndexOf('.') + 1);
         }
         public string Fullpath { get; set; }
         public string Name { get; set; }
@@ -66,7 +90,9 @@ namespace StellaQL
         {
             foreach (int tag in requiredAllTags)
             {
-                if (!Tags.Contains(tag)) { return false; } // If there is a tag that does not have even one, it is false.
+                // １個でも持ってないタグがあれば偽。
+                // If there is a tag that does not have even one, it is false.
+                if (!Tags.Contains(tag)) { return false; }
             }
             return true;
         }
@@ -121,6 +147,7 @@ namespace StellaQL
         public Dictionary<int, AcStateRecordable> StateHash_to_record { get; set; }
 
         /// <summary>
+        /// 独自フィールドなどを追加している場合、レコードを丸ごと差し替えてください。
         /// For your defined class.
         /// </summary>
         /// <param name="record">Your defined class.</param>
@@ -128,12 +155,16 @@ namespace StellaQL
         {
             StateHash_to_record[Animator.StringToHash(record.Fullpath)] = record;
         }
+        /// <summary>
+        /// ユーザー定義タグを変更する場合。
+        /// </summary>
         public void SetTag(string fullpath, string[] tags)
         {
             StateHash_to_record[Animator.StringToHash(fullpath)].Tags = Code.Hashes(tags);
         }
 
         /// <summary>
+        /// 現在のアニメーター・ステートに対応したユーザー定義レコードを取得。
         /// Current.
         /// </summary>
         /// <returns></returns>
@@ -150,6 +181,7 @@ namespace StellaQL
         }
 
         /// <summary>
+        /// 現在のアニメーション・クリップに対応したユーザー定義レコードを取得。
         /// Current.
         /// </summary>
         /// <returns></returns>

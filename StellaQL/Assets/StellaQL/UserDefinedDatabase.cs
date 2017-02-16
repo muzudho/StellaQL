@@ -3,7 +3,10 @@
 namespace StellaQL
 {
     /// <summary>
+    /// 重要。
     /// Important.
+    /// 
+    /// アニメーター・コントローラーと、自動生成したクラスを紐づけてください。
     /// Link animator controller to generated classes.
     /// </summary>
     public class UserDefinedDatabase : AbstractUserDefinedDatabase
@@ -13,9 +16,11 @@ namespace StellaQL
             AnimationControllerFilePath_to_table = new Dictionary<string, AControllable>()
             {
                 //
+                // ここに紐付けを並べてください。
                 // List here! Animator controller file path to instance.
                 //
                 {"Assets/StellaQL/AnimatorControllers/Demo_Zoo.controller", StellaQL.Acons.Demo_Zoo.AControl.Instance },
+                // 例。
                 // ex.)
                 //{"Assets/Your animator controllers/MainScene_Bird.controller", YourNamespace.MainScene_Bird.AControl.Instance },
                 //{"Assets/Your animator controllers/Fish.controller", YourNamespace.Fish.AControl.Instance },
@@ -25,6 +30,7 @@ namespace StellaQL
 
         #region Singleton
         /// <summary>
+        /// シングルトン・デザインパターンとして作っています。
         /// I am making this class as a singleton design pattern.
         /// </summary>
         static UserDefinedDatabase() { Instance = new UserDefinedDatabase(); }

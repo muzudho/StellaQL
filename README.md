@@ -1,4 +1,4 @@
-﻿# ステラキューエル StellaQL
+﻿#ステラキューエル StellaQL
 Unityのアニメーター・コントローラーを編集するツールです。  
 It is a tool to edit Unity's animator controller.  
 
@@ -22,7 +22,7 @@ There is no rollback at error suspension. Please keep a backup of your data.
 
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702110107a41b.png?raw=true)  
 
-# 価格 Price
+#価格 Price
 無料。  
 Free.  
 
@@ -34,7 +34,7 @@ Payment : https://enty.jp/grayscale
 
 Wishlist : https://www.amazon.co.jp/gp/registry/wishlist/1VWBU6FPLQC3W/ref=nav_wishlist_lists_1
 
-# ライセンス License
+#ライセンス License
 オープンソースです。  
 Open source.  
 
@@ -42,7 +42,7 @@ Copyright (c) 2017 TAKAHASHI Satoshi (Handle: Muzudho)(Dojin circle: "Grayscale"
 Released under the MIT license  
 http://opensource.org/licenses/mit-license.php  
 
-# 導入方法 How to install.
+#導入方法 How to install.
 (1) Git Hub の [Clone or download] - Download ZIP ボタンをクリックしてください。  
 Click the [Clone or download] - Download ZIP button on Git Hub.  
 
@@ -79,13 +79,14 @@ Double click Assets/AnimatorControllers/Demo_Zoo.
 Please click the [Tutorial] button.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif84.gif?raw=true)  
 
+#あなた用の設定 Settings for you
+あなたのアニメーター・コントローラーで StellaQL を使う方法
+How to use StellaQL with your animator controller
 
+(1) あなたのアニメーター・コントローラー・ファイル（.controller）を、StateCmdline ウィンドウの [Animator Controller Drag & Drop]エリアにドラッグ＆ドロップしてください。  
+Drag and drop your animator controller file (.controller) into the [Animator Controller Drag & Drop] area of the StateCmdline window.  
 
+(2) Assets/StellaQL/UserDefinedDatabase.cs ファイルを開いてください。  
+Open the Assets/StellaQL/UserDefinedDatabase.cs file.  
 
-
-
-
-
-
-
-
+TODO: 書きかけ  

@@ -10,14 +10,14 @@ namespace StellaQL
         /// <summary>
         /// For error.
         /// </summary>
-        public void Dump_Presentable(StringBuilder message)
+        public void Dump_Presentable(StringBuilder info_message)
         {
-            message.AppendLine("Please add the path of your animator controller.");
-            message.Append(AnimationControllerFilePath_to_table.Count); message.AppendLine(" mappings of animator controller and generated C # script are registered.");
+            info_message.AppendLine("Please add the path of your animator controller.");
+            info_message.Append(AnimationControllerFilePath_to_table.Count); info_message.AppendLine(" mappings of animator controller and generated C # script are registered.");
             int i = 0;
             foreach (string path in AnimationControllerFilePath_to_table.Keys)
             {
-                message.Append("["); message.Append(i); message.Append("]"); message.AppendLine(path);
+                info_message.Append("["); info_message.Append(i); info_message.Append("]"); info_message.AppendLine(path);
                 i++;
             }
         }

@@ -24,6 +24,6 @@ C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\UnityEngine.P
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\UnityEngine.Analytics.xml
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\UnityEngine.HoloLens.xml
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\UnityEngine.VR.xml
-C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp.dll
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache

@@ -7,20 +7,23 @@ namespace StellaQL
 {
     public abstract class FullpathConstantGenerator
     {
-        public static void WriteCshapScript(AnimatorController ac, StringBuilder message)
+        public static void WriteCshapScript(AnimatorController ac, StringBuilder info_message)
         {
             AconStateNameScanner aconScanner = new AconStateNameScanner();
-            aconScanner.ScanAnimatorController(ac, message);
+            aconScanner.ScanAnimatorController(ac, info_message);
 
             StringBuilder contents = new StringBuilder();
 
+            // 変換例:
             // Conversion example:
-            // "Main_Char3" is "Main_Char3", (same)
+
+            // 「Main_Char3」は「Main_Char3」(同じ)
+            // "Main_Char3" is "Main_Char3" (same)
+
+            // 「BattleFloor_char@arm@finger」は「Battolefloor_Chararmfinger」
             // "BattleFloor_char@arm@finger" is "Battolefloor_Chararmfinger"
             string className = FullpathConstantGenerator.String_to36_pascalCase(ac.name, "_", "_");
-            // Conversion example:
-            // "Main_Char3" is "Main_Char3_AbstractAControl"
-            // "Battolefloor_Chararmfinger" is "Battolefloor_Chararmfinger_AbstractAControl"
+
             string abstractClassName = className + "_AbstractAControl";
 
             contents.AppendLine("using System.Collections.Generic;");
@@ -41,15 +44,28 @@ namespace StellaQL
                 contents.Append("        public const string");
                 foreach (string fullpath in fullpaths)
                 {
-                    contents.AppendLine(); // Bring newlines first. Make the process of attaching the final semicolon easier.
+                    // 先に改行を持ってくる。最後のセミコロンを付ける処理を簡単にする。
+                    // Bring newlines first. Make the process of attaching the final semicolon easier.
+                    contents.AppendLine(); 
+
                     contents.Append("            ");
                     contents.Append(FullpathConstantGenerator.String_split_toUppercaseAlphabetFigureOnly_join(fullpath, ".", "_"));
                     contents.Append(@" = """);
                     contents.Append(fullpath);
-                    contents.Append(@""","); // Line breaks are not the last, but attach them first.
+
+                    // 改行は最後ではなく、最初に付けておく。
+                    // Line breaks are not the last, but attach them first.
+                    contents.Append(@""",");
                 }
-                contents.Length--; // Cut the last comma.
-                contents.AppendLine(@"; // semi colon"); // Add a semicolon instead.
+
+                // 最後のコンマを削る。
+                // Cut the last comma.
+                contents.Length--;
+
+                // 代わりにセミコロンを追加する。
+                // Add a semicolon instead.
+                contents.AppendLine(@"; // semi colon");
+
                 contents.AppendLine();
             }
 
@@ -70,12 +86,20 @@ namespace StellaQL
             contents.AppendLine("    }");
             contents.AppendLine("}");
 
-            StellaQLWriter.Write(StellaQLWriter.Filepath_GenerateFullpathConstCs(ac), contents, message);
+            StellaQLWriter.Write(StellaQLWriter.Filepath_GenerateFullpathConstCs(ac), contents, info_message);
         }
 
         /// <summary>
-        /// It fills in only 26 letters of the alphabet and 10 numeric characters. Ignore characters that can not be converted to alphabetic or numeric characters.
+        /// アルファベット２６文字と、数字１０文字だけに詰めます。
+        /// It fills in only 26 letters of the alphabet and 10 numeric characters.
+        /// 
+        /// 英字・数字に変換できない文字は無視します。
+        /// Ignore characters that can not be converted to alphabetic or numeric characters.
+        /// 
+        /// パスカルケースにします。（white.alpaca -> WhiteAlpaca）
         /// I will make it Pascal case. (White.alpaca -> WhiteAlpaca)
+        /// 
+        /// 通称 To36
         /// Commonly designated "To36"
         /// </summary>
         /// <param name="source"></param>
@@ -89,25 +113,54 @@ namespace StellaQL
                 string token = tokens[iToken];
                 for (int caret = 0; caret < token.Length; caret++)
                 {
-                    if (sb.Length == 0) // First character
+                    // 先頭の文字
+                    // First character
+                    if (sb.Length == 0)
                     {
-                        if (Char.IsUpper(token[caret]) || Char.IsDigit(token[caret])) { sb.Append(token[caret]); } // Capital letters and numbers are added as they are
-                        else if (Char.IsLower(token[caret])) { sb.Append(Char.ToUpper(token[caret])); } // Add lowercase letters in uppercase letters
-                                                                                                        // Ignore other characters
+                        // 大文字と数字はそのまま追加
+                        // Capital letters and numbers are added as they are
+                        if (Char.IsUpper(token[caret]) || Char.IsDigit(token[caret])) {
+                            sb.Append(token[caret]);
+                        }
+                        // 小文字は大文字にして追加
+                        // Add lowercase letters in uppercase letters
+                        else if (Char.IsLower(token[caret])) {
+                            sb.Append(Char.ToUpper(token[caret]));
+                        }
+                        // その他の文字は無視
+                        // Ignore other characters
                     }
-                    else // Characters after the first character
+                    //先頭以降の文字
+                    // Characters after the first character
+                    else
                     {
-                        if (Char.IsLower(token[caret]) || Char.IsDigit(token[caret])) { sb.Append(token[caret]); } // Add lowercase letters and numbers directly
-                        else if (Char.IsUpper(token[caret])) { sb.Append(Char.ToLower(token[caret])); } // Add capital letters in lowercase letters
-                                                                                                        // Ignore other characters
+                        // 小文字と数字はそのまま追加
+                        // Add lowercase letters and numbers directly
+                        if (Char.IsLower(token[caret]) || Char.IsDigit(token[caret])) {
+                            sb.Append(token[caret]);
+                        }
+                        // 大文字は小文字にして追加
+                        // Add capital letters in lowercase letters
+                        else if (Char.IsUpper(token[caret])) {
+                            sb.Append(Char.ToLower(token[caret]));
+                        }
+                        // その他の文字は無視
+                        // Ignore other characters
                     }
                 }
+                tokens[iToken] = sb.ToString(); // 2017-02-16 追加Add
             }
             return string.Join(joinSeparator, tokens);
         }
 
         /// <summary>
-        /// Capitalize only 26 letters and 10 letters of the alphabet. Ignore characters that can not be converted to alphabetic or numeric characters.
+        /// 大文字アルファベット２６文字と、数字１０文字だけに詰めます。
+        /// Capitalize only 26 letters and 10 letters of the alphabet.
+        /// 
+        /// 英字・数字に変換できない文字は無視します。
+        /// Ignore characters that can not be converted to alphabetic or numeric characters.
+        /// 
+        /// 通称 To36
         /// Commonly designated "To36"
         /// </summary>
         /// <param name="source"></param>
@@ -121,9 +174,14 @@ namespace StellaQL
                 StringBuilder sb = new StringBuilder();
                 for (int caret = 0; caret < token.Length; caret++)
                 {
-                    if (Char.IsUpper(token[caret]) || Char.IsDigit(token[caret])) { sb.Append(token[caret]); } // Capital letters and numbers are added as they are
-                    else if (Char.IsLower(token[caret])) { sb.Append(Char.ToUpper(token[caret])); } // Add lowercase letters in uppercase letters
-                                                                                                    // Ignore other characters
+                    // 大文字と数字はそのまま追加
+                    // Capital letters and numbers are added as they are
+                    if (Char.IsUpper(token[caret]) || Char.IsDigit(token[caret])) { sb.Append(token[caret]); }
+                    // 小文字は大文字にして追加
+                    // Add lowercase letters in uppercase letters
+                    else if (Char.IsLower(token[caret])) { sb.Append(Char.ToUpper(token[caret])); }
+                    // その他の文字は無視
+                    // Ignore other characters
                 }
                 tokens[iToken] = sb.ToString();
             }
@@ -131,7 +189,13 @@ namespace StellaQL
         }
 
         /// <summary>
-        /// Capitalize only 26 letters and 10 letters of the alphabet. Ignore characters that can not be converted to alphabetic or numeric characters.
+        /// 大文字アルファベット２６文字と、数字１０文字だけに詰めます。
+        /// Capitalize only 26 letters and 10 letters of the alphabet.
+        /// 
+        /// 英字・数字に変換できない文字は無視します。
+        /// Ignore characters that can not be converted to alphabetic or numeric characters.
+        /// 
+        /// 通称 To36
         /// Commonly designated "To36"
         /// </summary>
         /// <param name="source"></param>
@@ -141,8 +205,27 @@ namespace StellaQL
             StringBuilder sb = new StringBuilder();
             for (int caret = 0; caret < source.Length; caret++)
             {
-                if (Char.IsUpper(source[caret]) || Char.IsDigit(source[caret])) { sb.Append(source[caret]); } // Capital letters and numbers are added as they are
-                else if (Char.IsLower(source[caret])) { sb.Append(Char.ToUpper(source[caret])); } // Add lowercase letters in uppercase letters
+                // 大文字と数字はそのまま追加
+                // Capital letters and numbers are added as they are
+                if (Char.IsUpper(source[caret]) || Char.IsDigit(source[caret])) { sb.Append(source[caret]); }
+                // 小文字は大文字にして追加
+                // Add lowercase letters in uppercase letters
+                else if (Char.IsLower(source[caret])) { sb.Append(Char.ToUpper(source[caret])); }
+                // その他の文字は無視
+                // Ignore other characters
+            }
+            return sb.ToString();
+        }
+
+        public static string String_to_AlphabetFigureOnly(string source)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int caret = 0; caret < source.Length; caret++)
+            {
+                // 大文字、小文字と数字はそのまま追加
+                // Add capital letters, lower case letters and numbers directly
+                if (Char.IsUpper(source[caret]) || Char.IsLower(source[caret]) || Char.IsDigit(source[caret])) { sb.Append(source[caret]); }
+                // その他の文字は無視
                 // Ignore other characters
             }
             return sb.ToString();

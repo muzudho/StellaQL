@@ -61,6 +61,7 @@ public class StateCmdline : EditorWindow
 
     void OnGUI()
     {
+
         if (null== m_ac)
         {
             m_ac = AssetDatabase.LoadAssetAtPath<AnimatorController>(oldPath_animatorController);// Re-acquire animator controller.
@@ -81,7 +82,7 @@ public class StateCmdline : EditorWindow
         GUILayout.Label("Animator controller", EditorStyles.boldLabel);
         #region Drag and drop area
         var dropArea = GUILayoutUtility.GetRect(0.0f, 20.0f, GUILayout.ExpandWidth(true));
-        GUI.Box(dropArea, "Animation Controller Drag & Drop");
+        GUI.Box(dropArea, "Animator Controller Drag & Drop");
         string droppedPath_animatorController = "";
         // If the mouse position is within the GUI range
         if (dropArea.Contains(Event.current.mousePosition))
@@ -149,8 +150,26 @@ public class StateCmdline : EditorWindow
         }
         #endregion
 
-        bool isActivate_animatorController;
-        #region Animator controller readability judgment
+        if (isChanged_animatorController)
+        {
+            // Re-fetch animator controller.
+            m_ac = AssetDatabase.LoadAssetAtPath<AnimatorController>(oldPath_animatorController);
+        }
+
+        #region Create full path constant button
+        if (GUILayout.Button(BUTTON_LABEL_GENERATE_FULLPATH))
+        {
+            Debug.Log("ジェネレーターボタンを押したぜ☆（＾～＾）");
+            info_message.Append("Generate fullpath Start. filename(without extension) = "); info_message.Append(m_ac.name); info_message.AppendLine();
+            FullpathConstantGenerator.WriteCshapScript(m_ac, info_message);
+            info_message.Append("Generate fullpath End. filename(without extension) = "); info_message.Append(m_ac.name); info_message.AppendLine();
+            Debug.Log("ファイルを生成したぜ☆（＾～＾） info=[" + info_message.ToString() + "]");
+        }
+        GUILayout.Space(4.0f);
+        #endregion
+
+        bool isActivate_aconState;
+        #region Acon state readability judgment
         if (!UserDefinedDatabase.Instance.AnimationControllerFilePath_to_table.ContainsKey(oldPath_animatorController))
         {
             int step = 1;
@@ -168,30 +187,15 @@ public class StateCmdline : EditorWindow
             step++;
 
             UserDefinedDatabase.Instance.Dump_Presentable(info_message);
-            isActivate_animatorController = false;
+            isActivate_aconState = false;
         }
         else
         {
-            isActivate_animatorController = true;
+            isActivate_aconState = true;
         }
         #endregion
-        if (isActivate_animatorController)
+        if (isActivate_aconState)
         {
-            if (isChanged_animatorController)
-            {
-                // Re-acquire animator controller.
-                m_ac = AssetDatabase.LoadAssetAtPath<AnimatorController>(oldPath_animatorController);
-            }
-
-            #region Create full path constant button
-            if (GUILayout.Button(BUTTON_LABEL_GENERATE_FULLPATH))
-            {
-                info_message.Append("Generate fullpath Start. filename(without extension) = "); info_message.Append(m_ac.name); info_message.AppendLine();
-                FullpathConstantGenerator.WriteCshapScript(m_ac, info_message);
-                info_message.Append("Generate fullpath End. filename(without extension) = "); info_message.Append(m_ac.name); info_message.AppendLine();
-            }
-            GUILayout.Space(4.0f);
-            #endregion
             #region Query text area
             {
                 GUILayout.Label("Query (StellaQL)");
@@ -327,8 +331,10 @@ public class StateCmdline : EditorWindow
                 info_message_ofTextbox = info_message.ToString(); // update
                 info_message.Length = 0;
             }
+
             scroll_infoBox = EditorGUILayout.BeginScrollView(scroll_infoBox);
             info_message_ofTextbox = EditorGUILayout.TextArea(info_message_ofTextbox);//, GUILayout.Height(position.height - 30)
+                                                                                        // Repaint();
             EditorGUILayout.EndScrollView();
         }
         #endregion

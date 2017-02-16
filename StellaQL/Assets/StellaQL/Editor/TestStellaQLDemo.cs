@@ -43,7 +43,7 @@ namespace StellaQL
         /// Testing comments and blank lines
         /// </summary>
         [Test]
-        public void N30_Query_Comment1()
+        public void N30_Query_Comment1_WindowsCrLf()
         {
             string query = @"# comment A
 
@@ -61,7 +61,7 @@ namespace StellaQL
 
             Assert.AreEqual(@"                        STATE SELECT
                         WHERE TAG ([(Ei Si)(Bi)]{I})
-", query);
+", query, "Maybe, No problem.");
         }
         /// <summary>
         /// Testing comments and blank lines
@@ -1110,7 +1110,7 @@ namespace StellaQL
 a", ref caret);
             Assert.IsTrue(hit);
             //Assert.IsTrue(0<caret && caret < 3, "caret=["+caret+"]"); // new line is 1 or 2 characters?
-            Assert.AreEqual(2, caret, "caret=[" + caret + "] (If windows, It's 2. CR LF)"); // new line is 2 characters?
+            Assert.AreEqual(2, caret, "Maybe, No problem. caret=[" + caret + "] (If windows, It's 2. CR LF)"); // new line is 2 characters?
 
             caret = 0;
             hit = LexcalP.VarParentesis(@"(alpaca bear)

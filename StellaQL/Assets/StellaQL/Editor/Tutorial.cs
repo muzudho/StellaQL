@@ -264,8 +264,8 @@ Step 13
 手順14
 Step 14
 
-    Projectウィンドウから Assets / StellaQL / AnimatorControllers / Demo_Zoo をダブルクリックしてC#スクリプト・ファイルを開いてください。
-    Double click Assets / StellaQL / AnimatorControllers / Demo_Zoo from the Project window to open the C# script file.
+    Projectウィンドウから Assets/StellaQL/AnimatorControllers/Demo_Zoo をダブルクリックして C#スクリプト・ファイルを開いてください。
+    Double click Assets/StellaQL/AnimatorControllers/Demo_Zoo from the Project window to open the C# script file.
 
     ステートに１つ１つタグを設定しています。エイ、ビー、シー...
     I set the tag one by one in the state.Ei, Bi, Si...
