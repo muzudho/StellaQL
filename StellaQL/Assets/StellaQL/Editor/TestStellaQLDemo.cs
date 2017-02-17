@@ -14,6 +14,10 @@ using StellaQL.Acons.Demo_Zoo;
 
 namespace StellaQL
 {
+    /// <summary>
+    /// TODO: Export spreadsheet のテストもやりたい。
+    /// TODO: I also want to test Export spreadsheet.
+    /// </summary>
     public class TestStellaQLDemo
     {
         static TestStellaQLDemo()

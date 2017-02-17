@@ -279,7 +279,7 @@ public class StateCmdline : EditorWindow
                 }
             }
             #endregion
-            #region Export Spreadsheet button
+            #region Import Spreadsheet button
             // 実際はCSV形式ファイルを出力する
             // Actually output CSV format file
             if (GUILayout.Button("Import spread sheet")) // Import CSV
