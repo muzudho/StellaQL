@@ -4,6 +4,7 @@
 - [License is MIT license](#license-is-mit-license) MIT ライセンスです
 - [How to install](#how-to-install) 導入方法
 - [Settings for use with your Unity project](#settings-for-use-with-your-unity-project) あなたのUnityプロジェクトで使うための設定
+- [Command reference (brief introduction)](#command-reference-brief-introduction) コマンドリファレンス（簡単な紹介）
 
 # What is StellaQL?
 **ステラキューエルとは？**  
@@ -125,4 +126,158 @@ Add the animator controller file path and the inherited class pair you created.
 
 (5) **これで準備完了です。** Demo_Zoo と同じように StellaQL を使って扱えます。  
 **You are ready.** You can handle it using StellaQL just like Demo_Zoo.  
+
+# Command reference (brief introduction)
+**コマンドリファレンス(簡単な紹介)** 
+- [Add State](#Add-State) ステートの追加
+- [State update](#State-update) ステートの更新
+- [List of states](#List-of-states) ステートの一覧
+- [Delete state](#Delete-state) ステートの削除
+- [Add a transition](#Add-a-transition) トランジションの追加
+- [Add transition from Any state](#Add-transition-from-Any-state) Any Stateからトランジションの追加
+- [Add transition from Entry](#Add-transition-from-Entry) Entryからトランジションの追加
+- [Add transition to Exit](#Add-transition-to-Exit) Exitへトランジションの追加
+- [Transition update](#Transition-update) トランジションの更新
+- [Delete transition](#Delete-transition) トランジションの削除
+- [List of transitions](#List-of-transitions) トランジションの一覧
+
+## Add State
+**ステートの追加**  
+
+    STATE INSERT
+    WORDS
+        WhiteAlpaca
+        "White Bear"
+        "\"White\" Cat"
+        "White\\Gray\\Black Dog"
+    WHERE "Base Layer"
+
+WhiteAlpaca、White Bear、"White" Cat、White\Gray\Black Dog の４つのステートを作成します。  
+Create four states of WhiteAlpaca, White Bear, "White" Cat, White\Gray\Black Dog.  
+
+## State update
+**ステートの更新**  
+
+    STATE UPDATE
+    SET
+        speed                1.23
+        speedParameterActive true
+        speedParameter       4.5
+    WHERE
+        "Base Layer\.Cat"
+
+Base Layer.Catステートのプロパティーを更新します。  
+Update the properties of Base Layer.Cat state.  
+
+## List of states
+**ステートの一覧**  
+
+    STATE SELECT
+    WHERE
+        ".*(White).*"
+    THE
+        White_Animals001
+
+フルパスにWhiteを含むステートを一覧します。  
+List states including White in the full path.  
+
+## Delete state
+**ステートの削除**  
+
+    STATE DELETE
+    WORDS
+        ".*(White).*"
+    WHERE
+        "Base Layer"
+
+箱のラベルにWhiteを含むステートを削除します。  
+Delete the state containing White in the label of the box.  
+
+## Add a transition
+**トランジションの追加**  
+
+    TRANSITION INSERT
+        FROM
+            "Base Layer\.Cat"
+        TO
+            "Base Layer\.Dog"
+
+Base LayerのCatステートからDogステートへトランジションを引きます。  
+Draw the transition from the Cat state of the Base Layer to the Dog state.  
+
+## Add transition from Any state
+**Any Stateからトランジションの追加**  
+
+    TRANSITION ANYSTATE INSERT
+    FROM
+        "Base Layer"
+    TO
+        "Base Layer\.Foo"
+
+Base LayerのAny Stateから Fooステートへトランジションを引きます。  
+Draw transition from Any State of Base Layer to Foo state.  
+
+## Add transition from Entry
+**Entryからトランジションの追加**  
+
+    TRANSITION ENTRY INSERT
+    FROM
+        "Base Layer"
+    TO
+        "Base Layer\.Foo"
+
+Base LayerのEntryから Fooステートへトランジションを引きます。  
+Draw transition from Base Layer Entry to Foo state.  
+
+## Add transition to Exit
+**Exitへトランジションの追加**  
+
+    TRANSITION EXIT INSERT
+    FROM
+        "Base Layer\.Foo"
+
+Base LayerのFooステートから Exitへトランジションを引きます。  
+Draw transition from Base Fayer's Foo state to Exit.  
+
+## Transition update
+**トランジションの更新**  
+
+    TRANSITION UPDATE
+    SET
+        exitTime 1.0
+        duration 0
+    FROM
+        "Base Layer\.Cat"
+    TO
+        "Base Layer\.Dog"
+
+Base LayerのCatからDogへ引かれているトランジションのプロパティーを更新します。  
+Update the properties of the transition drawn from Cat to Dog in Base Layer.  
+
+## Delete transition
+**トランジションの削除**  
+
+    TRANSITION DELETE
+    FROM
+        "Base Layer\.Cat"
+    TO
+        "Base Layer\.Dog"
+
+Base LayerのCatからDogへ引かれているトランジションを削除します。  
+Delete the transition drawn from Cat to Dog in Base Layer.  
+
+## List of transitions
+**トランジションの一覧**  
+
+    TRANSITION SELECT
+    FROM
+        ".*"
+    TO
+        ".*"
+    THE
+        All_Animals001
+
+全てのトランジションを一覧します。  
+List all the transitions.  
+
 
