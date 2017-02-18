@@ -29,9 +29,9 @@ namespace StellaQL
             }
         }
 
-        public void ScanAnimatorController(AnimatorController ac, StringBuilder message)
+        public void ScanAnimatorController(AnimatorController ac, StringBuilder info_message)
         {
-            message.AppendLine("Animator controller Scanning...");
+            info_message.AppendLine("Animator controller Scanning...");
 
             // パラメーター
             // Parameter
@@ -123,7 +123,8 @@ namespace StellaQL
                 lNum++;
             }// レイヤー Layer
 
-            message.AppendLine("Scanned.");
+            OnScanned(info_message);
+            info_message.AppendLine("Scanned.");
         }
 
         public virtual void OnParameter(int num, AnimatorControllerParameter acp) { }
@@ -165,6 +166,8 @@ namespace StellaQL
         /// <returns>下位を検索するなら真
         /// True if you want to search the lower level</returns>
         public virtual bool OnCondition(AnimatorCondition condition, int lNum, int smNum, int sNum, int tNum, int cNum) { return false; }
+
+        public virtual void OnScanned(StringBuilder info_message) { }
     }
 
     /// <summary>
@@ -176,8 +179,10 @@ namespace StellaQL
         public AconScanner() : base(true)
         {
             AconDocument = new AconDocument();
+            m_motionCounter_ = new Dictionary<string, MotionRecord.Wrapper>();
         }
         public AconDocument AconDocument { get; private set; }
+        private Dictionary<string, MotionRecord.Wrapper> m_motionCounter_ { get; }
 
         public override void OnParameter( int num, AnimatorControllerParameter acp)
         {
@@ -224,10 +229,17 @@ namespace StellaQL
             {
                 Motion motion = caState.state.motion;
                 string assetPath = AssetDatabase.GetAssetPath(motion.GetInstanceID());
-                Debug.Log(" motion.GetType()=[" + motion.GetType().ToString() + "] assetPath=["+ assetPath + "]");
+                //ebug.Log(" motion.GetType()=[" + motion.GetType().ToString() + "] assetPath=["+ assetPath + "]");
 
-                // 重複するものもあると思うが、とりあえず放り込む。
-                AconDocument.motions.Add(new MotionRecord(assetPath, caState.state.motion));
+                if (m_motionCounter_.ContainsKey(assetPath))
+                {
+                    // 既存のモーションを複数回使うことはある。
+                    m_motionCounter_[assetPath].CountOfAttachDestination++;
+                }
+                else
+                {
+                    m_motionCounter_.Add(assetPath, new MotionRecord.Wrapper(caState.state.motion,1));
+                }
 
                 //AnimationClip animationClip = new AnimationClip();
                 //AnimationEvent e = new AnimationEvent();
@@ -272,6 +284,31 @@ namespace StellaQL
                 cNum,
                 condition);
             AconDocument.conditions.Add(conditionRecord); return true;
+        }
+
+        public override void OnScanned(StringBuilder info_message)
+        {
+            // 参照されていないモーションを探す
+            // Find unreferenced motion
+            info_message.AppendLine("Assets folder Scanning...");
+            string[] allAssetPaths = AssetDatabase.GetAllAssetPaths();
+            foreach (string assetPath in allAssetPaths)
+            {
+                if (assetPath.EndsWith(".anim",true, System.Globalization.CultureInfo.CurrentCulture) && !m_motionCounter_.ContainsKey(assetPath))
+                {
+                    // 参照されていないモーション
+                    // unreferenced motion
+                    Motion unreferencedMotion = AssetDatabase.LoadAssetAtPath<Motion>(assetPath);
+                    m_motionCounter_.Add(assetPath, new MotionRecord.Wrapper(unreferencedMotion, 0));
+                }
+            }
+
+            // モーションを移し替える。
+            // Change collection.
+            foreach (KeyValuePair<string, MotionRecord.Wrapper> item in m_motionCounter_)
+            {
+                AconDocument.motions.Add(new MotionRecord(item.Key, item.Value.CountOfAttachDestination, item.Value.Source));
+            }
         }
     }
 

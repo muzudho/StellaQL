@@ -1309,58 +1309,74 @@ namespace StellaQL
     /// </summary>
     public class MotionRecord : AconObjectRecordable
     {
+        public class Wrapper
+        {
+            public Wrapper(Motion source, int countOfAttachDestination)
+            {
+                Source = source;
+                CountOfAttachDestination = countOfAttachDestination;
+            }
+            public Motion Source { get; private set; }
+            public int CountOfAttachDestination { get; set; }
+        }
+
         static MotionRecord()
         {
             List<RecordDefinition> temp = new List<RecordDefinition>()
             {
-                new RecordDefinition("#assetPath#"          ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.Identifiable  ,false),
+                new RecordDefinition("#assetPath#"                  ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.Identifiable  ,false),
+                new RecordDefinition("#countOfAttachDestination#"   ,RecordDefinition.FieldType.Int     ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Wrapper)i).CountOfAttachDestination; }
+                    ,(object i,int v)=>{ ((Wrapper)i).CountOfAttachDestination = v; }
+                ),
                 new RecordDefinition("apparentSpeed"        ,RecordDefinition.FieldType.Float   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).apparentSpeed; }
+                    ,(object i)=>{ return ((Wrapper)i).Source.apparentSpeed; }
                     ,(object i,float v)=>{ throw new UnityException("Not supported.");}
                 ),
                 new RecordDefinition("averageAngularSpeed"  ,RecordDefinition.FieldType.Float   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).averageAngularSpeed; }
+                    ,(object i)=>{ return ((Wrapper)i).Source.averageAngularSpeed; }
                     ,(object i,float v)=>{ throw new UnityException("Not supported.");}
                 ),
                 new RecordDefinition("averageDuration"      ,RecordDefinition.FieldType.Float   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).averageDuration; }
+                    ,(object i)=>{ return ((Wrapper)i).Source.averageDuration; }
                     ,(object i,float v)=>{ throw new UnityException("Not supported.");}
                 ),
                 new RecordDefinition("#averageSpeed#"       ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).averageSpeed.ToString(); }
+                    ,(object i)=>{ return ((Wrapper)i).Source.averageSpeed.ToString(); }
                     ,(object i,string v)=>{ throw new UnityException("Not supported."); }
                 ),
                 new RecordDefinition("#hideFlags_string#"   ,RecordDefinition.FieldType.Other   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly          ,false),
                 new RecordDefinition("isHumanMotion"        ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).isHumanMotion; }
+                    ,(object i)=>{ return ((Wrapper)i).Source.isHumanMotion; }
                     ,(object i,bool v)=>{ throw new UnityException("Not supported."); }
                 ),
                 new RecordDefinition("isLooping"            ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).isLooping; }
+                    ,(object i)=>{ return ((Wrapper)i).Source.isLooping; }
                     ,(object i,bool v)=>{ throw new UnityException("Not supported."); }
                 ),
                 new RecordDefinition("legacy"               ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).legacy; }
+                    ,(object i)=>{ return ((Wrapper)i).Source.legacy; }
                     ,(object i,bool v)=>{ throw new UnityException("Not supported."); }
                 ),
                 new RecordDefinition("name"                 ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
-                    ,(object i)=>{ return ((Motion)i).name; }
-                    ,(object i,string v)=>{ ((Motion)i).name = v; }
+                    ,(object i)=>{ return ((Wrapper)i).Source.name; }
+                    ,(object i,string v)=>{ ((Wrapper)i).Source.name = v; }
                 ),
             };
             Definitions = new Dictionary<string, RecordDefinition>();
             foreach (RecordDefinition def in temp) { Definitions.Add(def.Name, def); }
 
-            Empty = new MotionRecord("", new AnimationClip());
+            Empty = new MotionRecord("", 0, new AnimationClip());
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
         public static AconObjectRecordable Empty { get; private set; }
 
-        public MotionRecord(string assetPath, Motion motion)
+        public MotionRecord(string assetPath, int countOfAttachDestination, Motion motion)
         {
             this.Fields = new Dictionary<string, object>()
             {
                 { "#assetPath#"                     , assetPath                         },
+                { "#countOfAttachDestination#"      , countOfAttachDestination          }, // 取り付け先の数
                 { "apparentSpeed"                   , motion.apparentSpeed              },
                 { "averageAngularSpeed"             , motion.averageAngularSpeed        },
                 { "averageDuration"                 , motion.averageDuration            },
@@ -1379,16 +1395,17 @@ namespace StellaQL
         /// <param name="d">output definition</param>
         public void AppendCsvLine(StringBuilder c, bool n, bool d)
         {
-            Definitions["#assetPath#"           ].AppendCsv(Fields, c, n, d);
-            Definitions["apparentSpeed"         ].AppendCsv(Fields, c, n, d);
-            Definitions["averageAngularSpeed"   ].AppendCsv(Fields, c, n, d);
-            Definitions["averageDuration"       ].AppendCsv(Fields, c, n, d);
-            Definitions["#averageSpeed#"        ].AppendCsv(Fields, c, n, d);
-            Definitions["#hideFlags_string#"    ].AppendCsv(Fields, c, n, d);
-            Definitions["isHumanMotion"         ].AppendCsv(Fields, c, n, d);
-            Definitions["isLooping"             ].AppendCsv(Fields, c, n, d);
-            Definitions["legacy"                ].AppendCsv(Fields, c, n, d);
-            Definitions["name"                  ].AppendCsv(Fields, c, n, d);
+            Definitions["#assetPath#"               ].AppendCsv(Fields, c, n, d);
+            Definitions["#countOfAttachDestination#"].AppendCsv(Fields, c, n, d);
+            Definitions["apparentSpeed"             ].AppendCsv(Fields, c, n, d);
+            Definitions["averageAngularSpeed"       ].AppendCsv(Fields, c, n, d);
+            Definitions["averageDuration"           ].AppendCsv(Fields, c, n, d);
+            Definitions["#averageSpeed#"            ].AppendCsv(Fields, c, n, d);
+            Definitions["#hideFlags_string#"        ].AppendCsv(Fields, c, n, d);
+            Definitions["isHumanMotion"             ].AppendCsv(Fields, c, n, d);
+            Definitions["isLooping"                 ].AppendCsv(Fields, c, n, d);
+            Definitions["legacy"                    ].AppendCsv(Fields, c, n, d);
+            Definitions["name"                      ].AppendCsv(Fields, c, n, d);
             if (n) { c.Append("[EOL],"); }
             if (!d) { c.AppendLine(); }
         }
