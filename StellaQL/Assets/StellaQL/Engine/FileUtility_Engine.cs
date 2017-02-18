@@ -6,7 +6,7 @@
         /// デモ・テスト用のアニメーター・コントローラーへのパス。
         /// Path to animator controller for demo test.
         /// </summary>
-        public const string PATH_ANIMATOR_CONTROLLER_FOR_DEMO_TEST = "Assets/StellaQL/AnimatorControllers/Demo_Zoo.controller";
+        public const string PATH_ANIMATOR_CONTROLLER_FOR_DEMO_TEST = "Assets/StellaQL/MayBeDeletedThisFolder/AnimatorControllers/Demo_Zoo.controller";
 
         /// <summary>
         /// ユーザー設定へのパス。

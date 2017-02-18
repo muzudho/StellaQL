@@ -29,11 +29,13 @@ namespace StellaQL
             // Link the file path of the animator controller to the instance that extended the automatically generated class.
             Instance.AddMappings_AnimatorControllerFilepath_And_UserDefinedInstance( new Dictionary<string, AControllable>(){
 
-                { "Assets/StellaQL/AnimatorControllers/Demo_Zoo.controller", StellaQL.Acons.Demo_Zoo.AControl.Instance },
-
                 // 例。
                 // ex.)
-                //{"Assets/New Animator Controller.controller", YourNamespace.Newanimatorcontroller.AControl.Instance },
+
+                //{ "Assets/StellaQL/MayBeDeletedThisFolder/AnimatorControllers/Demo_Zoo.controller", StellaQL.Acons.Demo_Zoo.AControl.Instance },
+
+                //{ "Assets/New Animator Controller.controller", YourNamespace.Newanimatorcontroller.AControl.Instance },
+
             });
         }
 

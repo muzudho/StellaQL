@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor.Animations;
 using UnityEngine;
-using StellaQL.Acons.Demo_Zoo;
 
 /// <summary>
 /// 解説。
