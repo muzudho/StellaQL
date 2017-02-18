@@ -9,7 +9,7 @@ using UnityEngine;
 /// 解説 : 「UnityEditorを使って2D格闘(2D Fighting game)作るときのモーション遷移図作成の半自動化に挑戦しよう＜その４＞」 http://qiita.com/muzudho1/items/baf4b06cdcda96ca9a11
 /// 解説 : 「Unityの上で動く、自作スクリプト言語の構文の実装の仕方」 http://qiita.com/muzudho1/items/05ffb53fb4e9d4252b28
 /// </summary>
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     /// <summary>
     /// セミコロンでつなげられたクエリーを先頭から順次、実行していく。

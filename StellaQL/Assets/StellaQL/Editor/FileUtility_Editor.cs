@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     /// <summary>
     /// ユニティー・エディター関連での、読み書き関連のファイルパスをまとめる。

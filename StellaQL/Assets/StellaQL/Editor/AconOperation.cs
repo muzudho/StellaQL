@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     /// <summary>
     /// どれでも関連

@@ -2,7 +2,7 @@
 using System.Text;
 using UnityEngine;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     public class AbstractUserSettings
     {

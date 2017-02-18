@@ -3,15 +3,15 @@
 //
 // Visual Studio 2015 [File] - [Advanced Save Options ...] - Line endings: [Windows (CR LF)]
 //
+using DojinCircleGrayscale.StellaQL.Acons.Demo_Zoo;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-using StellaQL.Acons.Demo_Zoo;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     /// <summary>
     /// TODO: Export spreadsheet のテストもやりたい。
@@ -429,17 +429,25 @@ namespace StellaQL
             HashSet<int> attrs = Code.Hashes(new string[] { AControl.TAG_BI, AControl.TAG_I });
             HashSet<int> recordHashes = RecordsFilter.Tags_NotAndNot(attrs, AControl.Instance.StateHash_to_record);
 
+            { int i = 0; foreach (int hash in recordHashes) { Debug.Log("TagsNotAndNot:["+i+"]" + AControl.Instance.StateHash_to_record[hash].Fullpath); i++; } }
             Assert.AreEqual(25, recordHashes.Count);
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_ALPACA)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_ANYSTATE)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_CAT)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_DOG)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_ENTRY)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_EXIT)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_FOO)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_ALPACA)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_CAT)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_DOG)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_FOX)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_IGUANA)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_CHIBA_)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_CHIBA_MAKUHARI)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_SAITAMA_)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_SAITAMA_NIIZA)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_TOKYO_)));
+            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_TOKYO_ARIAKE)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_KANGAROO)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_LION)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_NUTRIA)));
@@ -449,13 +457,6 @@ namespace StellaQL
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_WOLF)));
             Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_YAK)));
 
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_SAITAMA_)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_SAITAMA_NIIZA)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_TOKYO_)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_TOKYO_ARIAKE)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_CHIBA_)));
-            Assert.IsTrue(recordHashes.Contains(Animator.StringToHash(Demo_Zoo_AbstractAControl.BASELAYER_JAPAN_CHIBA_MAKUHARI)));
         }
         #endregion
 

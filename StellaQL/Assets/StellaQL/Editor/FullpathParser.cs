@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     public class FullpathTokens
     {

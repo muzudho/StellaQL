@@ -1,4 +1,4 @@
-﻿namespace StellaQL
+﻿namespace DojinCircleGrayscale.StellaQL
 {
     public abstract class FileUtility_Engine
     {

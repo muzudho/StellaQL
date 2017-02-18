@@ -3,7 +3,7 @@
 /// 参考 : 命名規則 : テラシュールブログ 「UnityのAnimatorControllerにAnimationClipを内蔵する」 http://tsubakit1.hateblo.jp/entry/2015/02/03/232316
 /// 参考 : アルファベット名 : SlideShare「1º week」(P17 SPELLING) http://www.slideshare.net/elsa_magdalena/1-week-14841043
 /// </summary>
-namespace StellaQL.Acons.Demo_Zoo
+namespace DojinCircleGrayscale.StellaQL.Acons.Demo_Zoo
 {
     /// <summary>
     /// アニメーター・コントローラー１つに対応するレコード。

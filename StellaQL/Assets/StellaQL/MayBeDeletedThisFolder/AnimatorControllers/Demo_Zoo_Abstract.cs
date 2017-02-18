@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace StellaQL.Acons.Demo_Zoo
+namespace DojinCircleGrayscale.StellaQL.Acons.Demo_Zoo
 {
     /// <summary>
     /// This file was automatically generated.

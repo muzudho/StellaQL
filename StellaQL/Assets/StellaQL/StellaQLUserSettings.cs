@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 
-/// <summary>
-/// ネームスペースは StellaQL にしてください。
-/// </summary>
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     /// <summary>
     /// あなたのUnityプロジェクトが StellaQL に設定する内容です。

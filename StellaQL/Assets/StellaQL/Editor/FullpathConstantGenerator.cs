@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEditor.Animations;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     public abstract class FullpathConstantGenerator
     {
@@ -25,7 +25,7 @@ namespace StellaQL
 
             contents.AppendLine("using System.Collections.Generic;");
             contents.AppendLine();
-            contents.Append("namespace StellaQL.Acons."); contents.AppendLine(className);
+            contents.Append("namespace DojinCircleGrayscale.StellaQL.Acons."); contents.AppendLine(className);
             contents.AppendLine("{");
             contents.AppendLine("    /// <summary>");
             contents.AppendLine("    /// This file was automatically generated.");

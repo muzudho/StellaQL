@@ -1,4 +1,4 @@
-﻿using StellaQL;
+﻿using DojinCircleGrayscale.StellaQL;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -49,7 +49,7 @@ public class StateMachineQueryStellaQL : EditorWindow
     /// <summary>
     /// メニューからクリックしたとき。
     /// </summary>
-    [MenuItem("Window/State Machine Query (StellaQL)")]
+    [MenuItem("Tool/Dojin Circle Grayscale/State Machine Query (StellaQL)")]
     static void Init()
     {
         // ウィンドウのインスタンスを取得して開くことだけする。

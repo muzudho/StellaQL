@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     /// <summary>
     /// データ操作を要求するレコード。

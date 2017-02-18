@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace StellaQL
+namespace DojinCircleGrayscale.StellaQL
 {
     public class TestFullpathParser
     {
