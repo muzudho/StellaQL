@@ -31,8 +31,7 @@ namespace StellaQL
 
                 // 例。
                 // ex.)
-
-                //{ "Assets/StellaQL/MayBeDeletedThisFolder/AnimatorControllers/Demo_Zoo.controller", StellaQL.Acons.Demo_Zoo.AControl.Instance },
+                { "Assets/StellaQL/MayBeDeletedThisFolder/AnimatorControllers/Demo_Zoo.controller", StellaQL.Acons.Demo_Zoo.AControl.Instance },
 
                 //{ "Assets/New Animator Controller.controller", YourNamespace.Newanimatorcontroller.AControl.Instance },
 

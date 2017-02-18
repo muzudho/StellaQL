@@ -9,9 +9,6 @@ namespace StellaQL
         protected AbstractUserSettings()
         {
             AnimationControllerFilepath_to_userDefinedInstance = new Dictionary<string, AControllable>();
-            AddMappings_AnimatorControllerFilepath_And_UserDefinedInstance(new Dictionary<string, AControllable>(){
-                { FileUtility_Engine.PATH_ANIMATOR_CONTROLLER_FOR_DEMO_TEST, StellaQL.Acons.Demo_Zoo.AControl.Instance },
-            });
         }
 
         public Dictionary<string, AControllable> AnimationControllerFilepath_to_userDefinedInstance { get; protected set; }

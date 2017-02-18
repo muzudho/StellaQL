@@ -63,12 +63,17 @@ namespace StellaQL
 
                         # comment C
 
+                        THE UnitTest
+
+                        # comment D
+
                         ";
 
             LexcalP.DeleteLineCommentAndBlankLine(ref query);
 
             Assert.AreEqual(@"                        STATE SELECT
                         WHERE TAG ([(Ei Si)(Bi)]{I})
+                        THE UnitTest
 ", query, "Maybe, No problem.");
         }
         /// <summary>
