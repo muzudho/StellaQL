@@ -141,6 +141,11 @@ namespace StellaQL
             if (outputDefinition) { return "./_log_(" + aconName + ")positions_def.csv"; }
             else { return "./_log_(" + aconName + ")positions.csv"; }
         }
+        public static string Filepath_LogMotions(string aconName, bool outputDefinition)
+        {
+            if (outputDefinition) { return "./_log_(" + aconName + ")motions_def.csv"; }
+            else { return "./_log_(" + aconName + ")motions.csv"; }
+        }
         #endregion
 
         public static void Write(string filepath, StringBuilder contents, StringBuilder message)

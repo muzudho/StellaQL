@@ -264,18 +264,57 @@ public class StateCmdline : EditorWindow
 
                 AconScanner aconScanner = new AconScanner();
                 aconScanner.ScanAnimatorController(m_ac, info_message);
-                AconData aconData = aconScanner.AconData;
+                AconDocument aconDocument = aconScanner.AconDocument;
                 bool outputDefinition = false;
                 for (int i = 0; i < 2; i++)
                 {
                     if (i == 1) { outputDefinition = true; }
-                    AconDataUtility.WriteCsv_Parameters(aconData, m_ac.name, outputDefinition, info_message);
-                    AconDataUtility.WriteCsv_Layers(aconData, m_ac.name, outputDefinition, info_message);
-                    AconDataUtility.WriteCsv_Statemachines(aconData, m_ac.name, outputDefinition, info_message);
-                    AconDataUtility.WriteCsv_States(aconData, m_ac.name, outputDefinition, info_message);
-                    AconDataUtility.WriteCsv_Transitions(aconData, m_ac.name, outputDefinition, info_message);
-                    AconDataUtility.WriteCsv_Conditions(aconData, m_ac.name, outputDefinition, info_message);
-                    AconDataUtility.WriteCsv_Positions(aconData, m_ac.name, outputDefinition, info_message);
+
+                    // 参照
+                    // I reffered it
+                    // Cannot convert HashSet to IReadOnlyCollection : http://stackoverflow.com/questions/32762631/cannot-convert-hashset-to-ireadonlycollection
+                    {
+                        StringBuilder contents = new StringBuilder();
+
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.parameters), ParameterRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogParameters(m_ac.name, outputDefinition), contents, info_message);
+                    }
+                    {
+                        StringBuilder contents = new StringBuilder();
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.layers), LayerRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogLayer(m_ac.name, outputDefinition), contents, info_message);
+                    }
+                    {
+                        StringBuilder contents = new StringBuilder();
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.statemachines), StatemachineRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogStatemachine(m_ac.name, outputDefinition), contents, info_message);
+                    }
+
+                    {
+                        StringBuilder contents = new StringBuilder();
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.states), StateRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogStates(m_ac.name, outputDefinition), contents, info_message);
+                    }
+                    {
+                        StringBuilder contents = new StringBuilder();
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.transitions), TransitionRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogTransition(m_ac.name, outputDefinition), contents, info_message);
+                    }
+                    {
+                        StringBuilder contents = new StringBuilder();
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.conditions), ConditionRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogConditions(m_ac.name, outputDefinition), contents, info_message);
+                    }
+                    {
+                        StringBuilder contents = new StringBuilder();
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.positions), PositionRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogPositions(m_ac.name, outputDefinition), contents, info_message);
+                    }
+                    {
+                        StringBuilder contents = new StringBuilder();
+                        AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.motions), MotionRecord.Empty, outputDefinition, contents);
+                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogMotions(m_ac.name, outputDefinition), contents, info_message);
+                    }
                 }
             }
             #endregion
@@ -290,7 +329,7 @@ public class StateCmdline : EditorWindow
                 // Current data
                 AconScanner aconScanner = new AconScanner();
                 aconScanner.ScanAnimatorController(m_ac, info_message);
-                AconData aconData_scanned = aconScanner.AconData;
+                AconDocument aconData_scanned = aconScanner.AconDocument;
 
                 HashSet<DataManipulationRecord> updateRequest;
                 // CSVファイル読取

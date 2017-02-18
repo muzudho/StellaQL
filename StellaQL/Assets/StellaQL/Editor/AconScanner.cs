@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -9,9 +10,12 @@ namespace StellaQL
     {
         public AbstractAconScanner(bool parameterScan)
         {
+            //, bool motionScan
             this.parameterScan = parameterScan;
+            //this.motionScan = motionScan;
         }
         bool parameterScan;
+        //bool motionScan;
 
         void ScanRecursive(string path, AnimatorStateMachine stateMachine, Dictionary<string, AnimatorStateMachine> statemachineList_flat)
         {
@@ -171,14 +175,14 @@ namespace StellaQL
     {
         public AconScanner() : base(true)
         {
-            AconData = new AconData();
+            AconDocument = new AconDocument();
         }
-        public AconData AconData { get; private set; }
+        public AconDocument AconDocument { get; private set; }
 
         public override void OnParameter( int num, AnimatorControllerParameter acp)
         {
             ParameterRecord record = new ParameterRecord(num, acp.name, acp.defaultBool, acp.defaultFloat, acp.defaultInt, acp.nameHash, acp.type);
-            AconData.table_parameter.Add(record);
+            AconDocument.parameters.Add(record);
         }
 
         public override bool OnLayer( AnimatorControllerLayer layer, int lNum)
@@ -186,7 +190,7 @@ namespace StellaQL
             LayerRecord layerRecord = new LayerRecord(
                 lNum,
                 layer);
-            AconData.table_layer.Add(layerRecord); return true;
+            AconDocument.layers.Add(layerRecord); return true;
         }
 
         public override bool OnStatemachine(string fullnameEndWithDot, string statemachinePath, AnimatorStateMachine statemachine, int lNum, int smNum)
@@ -195,8 +199,8 @@ namespace StellaQL
                 lNum,
                 smNum,
                 statemachinePath,
-                statemachine, AconData.table_position);
-            AconData.table_statemachine.Add(stateMachineRecord); return true;
+                statemachine, AconDocument.positions);
+            AconDocument.statemachines.Add(stateMachineRecord); return true;
         }
 
         /// <param name="parentPath"></param>
@@ -212,8 +216,26 @@ namespace StellaQL
                 smNum,
                 sNum,
                 parentPath,
-                caState, AconData.table_position);
-            AconData.table_state.Add(stateRecord); return true;
+                caState, AconDocument.positions);
+            AconDocument.states.Add(stateRecord);
+
+            // モーション・スキャン
+            if (null != caState.state.motion)
+            {
+                Motion motion = caState.state.motion;
+                string assetPath = AssetDatabase.GetAssetPath(motion.GetInstanceID());
+                Debug.Log(" motion.GetType()=[" + motion.GetType().ToString() + "] assetPath=["+ assetPath + "]");
+
+                // 重複するものもあると思うが、とりあえず放り込む。
+                AconDocument.motions.Add(new MotionRecord(assetPath, caState.state.motion));
+
+                //AnimationClip animationClip = new AnimationClip();
+                //AnimationEvent e = new AnimationEvent();
+                //e.animatorStateInfo = new AnimatorStateInfo();
+                //animationClip.AddEvent(e);
+            }
+
+            return true;
         }
 
         /// <param name="transition"></param>
@@ -230,7 +252,7 @@ namespace StellaQL
                 sNum,
                 tNum,
                 transition, "");
-            AconData.table_transition.Add(transitionRecord); return true;
+            AconDocument.transitions.Add(transitionRecord); return true;
         }
 
         /// <param name="condition"></param>
@@ -249,7 +271,7 @@ namespace StellaQL
                 tNum,
                 cNum,
                 condition);
-            AconData.table_condition.Add(conditionRecord); return true;
+            AconDocument.conditions.Add(conditionRecord); return true;
         }
     }
 

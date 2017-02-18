@@ -293,11 +293,25 @@ namespace StellaQL
         }
     }
 
+    public interface AconObjectRecordable
+    {
+        /// <summary>
+        /// CSVを１行出力します。
+        /// </summary>
+        /// <param name="c">コンテンツ
+        /// contents</param>
+        /// <param name="n">列名出力
+        /// output column name</param>
+        /// <param name="d">列定義出力
+        /// output definition</param>
+        void AppendCsvLine(StringBuilder c, bool n, bool d);
+    }
+
     /// <summary>
     /// パラメーター
     /// Parameter.
     /// </summary>
-    public class ParameterRecord
+    public class ParameterRecord : AconObjectRecordable
     {
         static ParameterRecord()
         {
@@ -335,7 +349,7 @@ namespace StellaQL
             Empty = new ParameterRecord(-1, "", false, 0.0f, -1, 0, (AnimatorControllerParameterType)0);
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
-        public static ParameterRecord Empty { get; private set; }
+        public static AconObjectRecordable Empty { get; private set; }
 
         public ParameterRecord(int num, string name, bool numberBool, float numberFloat, int numberInt, int nameHash, AnimatorControllerParameterType type)
         {
@@ -378,7 +392,7 @@ namespace StellaQL
     /// レイヤー
     /// Layer.
     /// </summary>
-    public class LayerRecord
+    public class LayerRecord : AconObjectRecordable
     {
         /// <summary>
         /// レイヤーのコピーを渡されても更新できないので、アニメーション・コントローラーも一緒に渡そうというもの。
@@ -464,7 +478,7 @@ namespace StellaQL
             Empty = new LayerRecord(-1, new AnimatorControllerLayer());
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
-        public static LayerRecord Empty { get; private set; }
+        public static AconObjectRecordable Empty { get; private set; }
 
         public LayerRecord(int num, AnimatorControllerLayer layer)
         {
@@ -504,7 +518,7 @@ namespace StellaQL
     /// ステートマシン
     /// Statemachine.
     /// </summary>
-    public class StatemachineRecord
+    public class StatemachineRecord : AconObjectRecordable
     {
         public class Wrapper {
             /// <summary>
@@ -562,12 +576,12 @@ namespace StellaQL
             Definitions = new Dictionary<string, RecordDefinition>();
             foreach (RecordDefinition def in temp) { Definitions.Add(def.Name, def); }
 
-            Empty = new StatemachineRecord(-1,-1,"",new AnimatorStateMachine(),new List<PositionRecord>());
+            Empty = new StatemachineRecord(-1,-1,"",new AnimatorStateMachine(),new HashSet<PositionRecord>());
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
-        public static StatemachineRecord Empty { get; private set; }
+        public static AconObjectRecordable Empty { get; private set; }
 
-        public StatemachineRecord(int layerNum, int machineStateNum, string statemachinePath, AnimatorStateMachine stateMachine, List<PositionRecord> positionsTable)
+        public StatemachineRecord(int layerNum, int machineStateNum, string statemachinePath, AnimatorStateMachine stateMachine, HashSet<PositionRecord> positionsTable)
         {
             this.Fields = new Dictionary<string, object>()
             {
@@ -614,7 +628,7 @@ namespace StellaQL
     /// ステート
     /// State.
     /// </summary>
-    public class StateRecord
+    public class StateRecord : AconObjectRecordable
     {
         public class Wrapper
         {
@@ -638,7 +652,7 @@ namespace StellaQL
                 new RecordDefinition("name"                         ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.Identifiable  ,false) ,
                 new RecordDefinition("cycleOffset"                  ,RecordDefinition.FieldType.Float   ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None                  ,(object i)=>{ return ((Wrapper)i).Source.cycleOffset; }         ,(object i,float v)=>{ ((Wrapper)i).Source.cycleOffset = v; }),
                 new RecordDefinition("cycleOffsetParameter"         ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None                  ,(object i)=>{ return ((Wrapper)i).Source.cycleOffsetParameter; },(object i,string v)=>{ ((Wrapper)i).Source.cycleOffsetParameter = v; }),
-                new RecordDefinition("hideFlags"                    ,RecordDefinition.FieldType.Other   ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None          ,false),
+                new RecordDefinition("#hideFlags_string#"           ,RecordDefinition.FieldType.Other   ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None          ,false),
                 new RecordDefinition("iKOnFeet"                     ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None                  ,(object i)=>{ return ((Wrapper)i).Source.iKOnFeet; }            ,(object i,bool v)=>{ ((Wrapper)i).Source.iKOnFeet = v; }),
                 new RecordDefinition("mirror"                       ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None                  ,(object i)=>{ return ((Wrapper)i).Source.mirror; }              ,(object i,bool v)=>{ ((Wrapper)i).Source.mirror = v; }),
                 new RecordDefinition("mirrorParameter"              ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None     ,RecordDefinition.KeyType.None                  ,(object i)=>{ return ((Wrapper)i).Source.mirrorParameter; }     ,(object i,string v)=>{ ((Wrapper)i).Source.mirrorParameter = v; }),
@@ -657,9 +671,9 @@ namespace StellaQL
             Empty = new StateRecord(-1,-1,-1,new AnimatorState());
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
-        public static StateRecord Empty { get; private set; }
+        public static AconObjectRecordable Empty { get; private set; }
 
-        public static StateRecord CreateInstance(int layerNum, int machineStateNum, int stateNum, string parentPath, ChildAnimatorState caState, List<PositionRecord> positionsTable)
+        public static StateRecord CreateInstance(int layerNum, int machineStateNum, int stateNum, string parentPath, ChildAnimatorState caState, HashSet<PositionRecord> positionsTable)
         {
             positionsTable.Add(new PositionRecord(layerNum, machineStateNum, stateNum, -1, -1, "position", caState.position));
             return new StateRecord(layerNum, machineStateNum, stateNum, caState.state);
@@ -676,7 +690,7 @@ namespace StellaQL
                 { "name"                    ,state.name                 },
                 { "cycleOffset"             ,state.cycleOffset          },
                 { "cycleOffsetParameter"    ,state.cycleOffsetParameter },
-                { "hideFlags"               ,state.hideFlags.ToString() },
+                { "#hideFlags_string#"      ,state.hideFlags.ToString() }, // 文字列化 toString
                 { "iKOnFeet"                ,state.iKOnFeet             },
                 { "mirror"                  ,state.mirror               },
                 { "mirrorParameter"         ,state.mirrorParameter      },
@@ -709,7 +723,7 @@ namespace StellaQL
             Definitions["name"                  ].AppendCsv(Fields, c, n, d);
             Definitions["cycleOffset"           ].AppendCsv(Fields, c, n, d);
             Definitions["cycleOffsetParameter"  ].AppendCsv(Fields, c, n, d);
-            Definitions["hideFlags"             ].AppendCsv(Fields, c, n, d);
+            Definitions["#hideFlags_string#"    ].AppendCsv(Fields, c, n, d);
             Definitions["iKOnFeet"              ].AppendCsv(Fields, c, n, d);
             Definitions["mirror"                ].AppendCsv(Fields, c, n, d);
             Definitions["mirrorParameter"       ].AppendCsv(Fields, c, n, d);
@@ -733,7 +747,7 @@ namespace StellaQL
     /// (コンディションは別)
     /// (Condition separately)
     /// </summary>
-    public class TransitionRecord
+    public class TransitionRecord : AconObjectRecordable
     {
         static TransitionRecord()
         {
@@ -770,7 +784,7 @@ namespace StellaQL
             Empty = new TransitionRecord(-1,-1,-1,-1,new AnimatorStateTransition(),"");
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
-        public static TransitionRecord Empty { get; private set; }
+        public static AconObjectRecordable Empty { get; private set; }
 
         public TransitionRecord(int layerNum, int machineStateNum, int stateNum, int transitionNum, AnimatorStateTransition transition, string stellaQLComment)
         {
@@ -859,7 +873,7 @@ namespace StellaQL
     /// コンディション
     /// Condition.
     /// </summary>
-    public class ConditionRecord
+    public class ConditionRecord : AconObjectRecordable
     {
         /// <summary>
         /// struct を object に渡したいときに使うラッパー
@@ -1008,7 +1022,7 @@ namespace StellaQL
             Empty = new ConditionRecord(-1, -1, -1, -1, -1, new AnimatorCondition());
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
-        public static ConditionRecord Empty { get; set; }
+        public static AconObjectRecordable Empty { get; set; }
 
         public ConditionRecord(int layerNum, int machineStateNum, int stateNum, int transitionNum, int conditionNum, AnimatorCondition condition)
         {
@@ -1054,7 +1068,7 @@ namespace StellaQL
     /// ポジション
     /// Position.
     /// </summary>
-    public class PositionRecord
+    public class PositionRecord : AconObjectRecordable
     {
         /// <summary>
         /// struct を object に渡したいときに使うラッパー
@@ -1233,7 +1247,7 @@ namespace StellaQL
             Empty = new PositionRecord(-1,-1,-1,-1,-1,"",new Vector3());
         }
         public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
-        public static PositionRecord Empty { get; private set; }
+        public static AconObjectRecordable Empty { get; private set; }
 
         public PositionRecord(int layerNum, int machineStateNum, int stateNum, int transitionNum, int conditionNum, string proertyName, Vector3 position)
         {
@@ -1289,170 +1303,206 @@ namespace StellaQL
         }
     }
 
-    public class AconData
+    /// <summary>
+    /// モーション
+    /// Motion
+    /// </summary>
+    public class MotionRecord : AconObjectRecordable
     {
-        public AconData()
+        static MotionRecord()
         {
-            table_parameter     = new HashSet<ParameterRecord>();
-            table_layer         = new List<LayerRecord>();
-            table_statemachine  = new List<StatemachineRecord>();
-            table_state         = new HashSet<StateRecord>();
-            table_transition    = new HashSet<TransitionRecord>();
-            table_condition     = new List<ConditionRecord>();
-            table_position      = new List<PositionRecord>();
-        }
+            List<RecordDefinition> temp = new List<RecordDefinition>()
+            {
+                new RecordDefinition("#assetPath#"          ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.Identifiable  ,false),
+                new RecordDefinition("apparentSpeed"        ,RecordDefinition.FieldType.Float   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).apparentSpeed; }
+                    ,(object i,float v)=>{ throw new UnityException("Not supported.");}
+                ),
+                new RecordDefinition("averageAngularSpeed"  ,RecordDefinition.FieldType.Float   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).averageAngularSpeed; }
+                    ,(object i,float v)=>{ throw new UnityException("Not supported.");}
+                ),
+                new RecordDefinition("averageDuration"      ,RecordDefinition.FieldType.Float   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).averageDuration; }
+                    ,(object i,float v)=>{ throw new UnityException("Not supported.");}
+                ),
+                new RecordDefinition("#averageSpeed#"       ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).averageSpeed.ToString(); }
+                    ,(object i,string v)=>{ throw new UnityException("Not supported."); }
+                ),
+                new RecordDefinition("#hideFlags_string#"   ,RecordDefinition.FieldType.Other   ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly          ,false),
+                new RecordDefinition("isHumanMotion"        ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).isHumanMotion; }
+                    ,(object i,bool v)=>{ throw new UnityException("Not supported."); }
+                ),
+                new RecordDefinition("isLooping"            ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).isLooping; }
+                    ,(object i,bool v)=>{ throw new UnityException("Not supported."); }
+                ),
+                new RecordDefinition("legacy"               ,RecordDefinition.FieldType.Bool    ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).legacy; }
+                    ,(object i,bool v)=>{ throw new UnityException("Not supported."); }
+                ),
+                new RecordDefinition("name"                 ,RecordDefinition.FieldType.String  ,RecordDefinition.SubFieldType.None ,RecordDefinition.KeyType.ReadOnly
+                    ,(object i)=>{ return ((Motion)i).name; }
+                    ,(object i,string v)=>{ ((Motion)i).name = v; }
+                ),
+            };
+            Definitions = new Dictionary<string, RecordDefinition>();
+            foreach (RecordDefinition def in temp) { Definitions.Add(def.Name, def); }
 
-        public HashSet<ParameterRecord>     table_parameter { get; set; }
-        public List<LayerRecord>            table_layer { get; set; }
-        public List<StatemachineRecord>     table_statemachine { get; set; }
-        public HashSet<StateRecord>         table_state { get; set; }
-        public HashSet<TransitionRecord>    table_transition { get; set; }
-        public List<ConditionRecord>        table_condition { get; set; }
-        public List<PositionRecord>         table_position { get; set; }
+            Empty = new MotionRecord("", new AnimationClip());
+        }
+        public static Dictionary<string, RecordDefinition> Definitions { get; private set; }
+        public static AconObjectRecordable Empty { get; private set; }
+
+        public MotionRecord(string assetPath, Motion motion)
+        {
+            this.Fields = new Dictionary<string, object>()
+            {
+                { "#assetPath#"                     , assetPath                         },
+                { "apparentSpeed"                   , motion.apparentSpeed              },
+                { "averageAngularSpeed"             , motion.averageAngularSpeed        },
+                { "averageDuration"                 , motion.averageDuration            },
+                { "#averageSpeed#"                  , motion.averageSpeed.ToString()    }, // 文字列化 toString
+                { "#hideFlags_string#"              , motion.hideFlags.ToString()       }, // 文字列化 toString
+                { "isHumanMotion"                   , motion.isHumanMotion              },
+                { "isLooping"                       , motion.isLooping                  },
+                { "legacy"                          , motion.legacy                     },
+                { "name"                            , motion.name                       },
+            };
+        }
+        public Dictionary<string, object> Fields { get; set; }
+
+        /// <param name="c">contents</param>
+        /// <param name="n">output column name</param>
+        /// <param name="d">output definition</param>
+        public void AppendCsvLine(StringBuilder c, bool n, bool d)
+        {
+            Definitions["#assetPath#"           ].AppendCsv(Fields, c, n, d);
+            Definitions["apparentSpeed"         ].AppendCsv(Fields, c, n, d);
+            Definitions["averageAngularSpeed"   ].AppendCsv(Fields, c, n, d);
+            Definitions["averageDuration"       ].AppendCsv(Fields, c, n, d);
+            Definitions["#averageSpeed#"        ].AppendCsv(Fields, c, n, d);
+            Definitions["#hideFlags_string#"    ].AppendCsv(Fields, c, n, d);
+            Definitions["isHumanMotion"         ].AppendCsv(Fields, c, n, d);
+            Definitions["isLooping"             ].AppendCsv(Fields, c, n, d);
+            Definitions["legacy"                ].AppendCsv(Fields, c, n, d);
+            Definitions["name"                  ].AppendCsv(Fields, c, n, d);
+            if (n) { c.Append("[EOL],"); }
+            if (!d) { c.AppendLine(); }
+        }
     }
 
+    /// <summary>
+    /// スプレッドシートに並べるデータ
+    /// Data to be arranged in a spreadsheet
+    /// </summary>
+    public class AconDocument
+    {
+        public AconDocument()
+        {
+            parameters      = new HashSet<ParameterRecord>();
+            layers          = new HashSet<LayerRecord>();
+            statemachines   = new HashSet<StatemachineRecord>();
+            states          = new HashSet<StateRecord>();
+            transitions     = new HashSet<TransitionRecord>();
+            conditions      = new HashSet<ConditionRecord>();
+            positions       = new HashSet<PositionRecord>();
+            motions         = new HashSet<MotionRecord>();
+        }
+
+        public HashSet<ParameterRecord>     parameters      { get; set; }
+        public HashSet<LayerRecord>         layers          { get; set; }
+        public HashSet<StatemachineRecord>  statemachines   { get; set; }
+        public HashSet<StateRecord>         states          { get; set; }
+        public HashSet<TransitionRecord>    transitions     { get; set; }
+        public HashSet<ConditionRecord>     conditions      { get; set; }
+        public HashSet<PositionRecord>      positions       { get; set; }
+        public HashSet<MotionRecord>        motions         { get; set; }
+    }
 
     public abstract class AconDataUtility
     {
-
-        public static void WriteCsv_Parameters(AconData aconData, string aconName, bool outputDefinition, StringBuilder message)
+        /// <summary>
+        /// ハッシュセットをリストに変更します。
+        /// Change the hash set to a list.
+        ///
+        /// 参照
+        /// I reffered it
+        /// Cannot convert HashSet to IReadOnlyCollection : http://stackoverflow.com/questions/32762631/cannot-convert-hashset-to-ireadonlycollection
+        /// </summary>
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<ParameterRecord> src)
         {
-            StringBuilder contents = new StringBuilder();
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (ParameterRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<LayerRecord> src)
+        {
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (LayerRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<StatemachineRecord> src)
+        {
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (StatemachineRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<StateRecord> src)
+        {
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (StateRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<TransitionRecord> src)
+        {
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (TransitionRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<ConditionRecord> src)
+        {
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (ConditionRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<PositionRecord> src)
+        {
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (PositionRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+        public static HashSet<AconObjectRecordable> ToHash(HashSet<MotionRecord> src)
+        {
+            HashSet<AconObjectRecordable> dst = new HashSet<AconObjectRecordable>();
+            foreach (MotionRecord item in src) { dst.Add(item); }
+            return dst;
+        }
+
+        public static void CreateCsvTable(HashSet<AconObjectRecordable> table, AconObjectRecordable empty, bool outputDefinition, StringBuilder contents)
+        {
             if (outputDefinition)
             {
+                // 列定義シートを作る場合
+                // When creating a column definition sheet
+
                 // 列定義ヘッダー出力
                 // Column definition header output
                 RecordDefinition.AppendDefinitionHeader(contents);
                 // 列名出力
                 // Column definition output
-                ParameterRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
+                empty.AppendCsvLine(contents, false, outputDefinition);
             }
             else
             {
                 // 列名出力
                 // Column name output
-                ParameterRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
-                foreach (ParameterRecord record in aconData.table_parameter) { record.AppendCsvLine(contents, false, outputDefinition); }
+                empty.AppendCsvLine(contents, true, outputDefinition);
+                foreach (AconObjectRecordable record in table) { record.AppendCsvLine(contents, false, outputDefinition); }
             }
-
             contents.AppendLine("[EOF],");
-            StellaQLWriter.Write(StellaQLWriter.Filepath_LogParameters(aconName, outputDefinition), contents, message);
-        }
-
-        public static void WriteCsv_Layers(AconData aconData, string aconName, bool outputDefinition, StringBuilder message)
-        {
-            StringBuilder contents = new StringBuilder();
-
-            if (outputDefinition) {
-                RecordDefinition.AppendDefinitionHeader(contents);
-                LayerRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
-            }
-            else
-            {
-                LayerRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
-                foreach (LayerRecord record in aconData.table_layer) { record.AppendCsvLine(contents, false, outputDefinition); }
-            }
-
-            contents.AppendLine("[EOF],");
-            StellaQLWriter.Write(StellaQLWriter.Filepath_LogLayer(aconName, outputDefinition), contents, message);
-        }
-
-        public static void WriteCsv_Statemachines(AconData aconData, string aconName, bool outputDefinition, StringBuilder message)
-        {
-            StringBuilder contents = new StringBuilder();
-
-            if (outputDefinition)
-            {
-                RecordDefinition.AppendDefinitionHeader(contents);
-                StatemachineRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
-            }
-            else {
-                StatemachineRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
-                foreach (StatemachineRecord record in aconData.table_statemachine) { record.AppendCsvLine(contents, false, outputDefinition); }
-            }
-
-            contents.AppendLine("[EOF],");
-            StellaQLWriter.Write(StellaQLWriter.Filepath_LogStatemachine(aconName, outputDefinition), contents, message);
-        }
-
-        public static void CreateCsvTable_State( HashSet<StateRecord> table, bool outputDefinition, StringBuilder contents)
-        {
-            if (outputDefinition)
-            {
-                RecordDefinition.AppendDefinitionHeader(contents);
-                StateRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
-            }
-            else {
-                StateRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
-                foreach (StateRecord stateRecord in table) { stateRecord.AppendCsvLine(contents, false, outputDefinition); }
-            }
-        }
-        public static void WriteCsv_States( AconData aconData, string aconName, bool outputDefinition, StringBuilder message)
-        {
-            StringBuilder contents = new StringBuilder();
-            CreateCsvTable_State( aconData.table_state, outputDefinition, contents);
-
-            contents.AppendLine("[EOF],");
-            StellaQLWriter.Write(StellaQLWriter.Filepath_LogStates(aconName, outputDefinition), contents, message);
-        }
-
-        public static void CreateCsvTable_Transition(HashSet<TransitionRecord> table, bool outputDefinition, StringBuilder contents)
-        {
-            // 列定義シートを作る場合
-            // When creating a column definition sheet
-            if (outputDefinition)
-            {
-                RecordDefinition.AppendDefinitionHeader(contents);
-                TransitionRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
-            }
-            else {
-                TransitionRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
-                foreach (TransitionRecord record in table) { record.AppendCsvLine(contents, false, outputDefinition); }
-            }
-        }
-        public static void WriteCsv_Transitions(AconData aconData, string aconName, bool outputDefinition, StringBuilder message)
-        {
-            StringBuilder contents = new StringBuilder();
-            CreateCsvTable_Transition(aconData.table_transition, outputDefinition, contents);
-
-            contents.AppendLine("[EOF],");
-            StellaQLWriter.Write(StellaQLWriter.Filepath_LogTransition(aconName, outputDefinition), contents, message);
-        }
-
-        public static void WriteCsv_Conditions(AconData aconData, string aconName, bool outputDefinition, StringBuilder message)
-        {
-            StringBuilder contents = new StringBuilder();
-
-            if (outputDefinition)
-            {
-                RecordDefinition.AppendDefinitionHeader(contents);
-                ConditionRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
-            }
-            else {
-                ConditionRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
-                foreach (ConditionRecord record in aconData.table_condition) { record.AppendCsvLine(contents, false, outputDefinition); }
-            }
-
-            contents.AppendLine("[EOF],");
-            StellaQLWriter.Write(StellaQLWriter.Filepath_LogConditions(aconName, outputDefinition), contents, message);
-        }
-
-        public static void WriteCsv_Positions(AconData aconData, string aconName, bool outputDefinition, StringBuilder message)
-        {
-            StringBuilder contents = new StringBuilder();
-
-            if (outputDefinition)
-            {
-                RecordDefinition.AppendDefinitionHeader(contents);
-                PositionRecord.Empty.AppendCsvLine(contents, false, outputDefinition);
-            }
-            else {
-                PositionRecord.Empty.AppendCsvLine(contents, true, outputDefinition);
-                foreach (PositionRecord record in aconData.table_position) { record.AppendCsvLine(contents, false, outputDefinition); }
-            }
-
-            contents.AppendLine("[EOF],");
-            StellaQLWriter.Write(StellaQLWriter.Filepath_LogPositions(aconName, outputDefinition), contents, message);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace StellaQL
     /// </summary>
     public abstract class Operation_Something
     {
-        public static void ManipulateData(AnimatorControllerWrapper acWrapper, AconData aconData_old, HashSet<DataManipulationRecord> request_packets, StringBuilder info_message)
+        public static void ManipulateData(AnimatorControllerWrapper acWrapper, AconDocument aconData_old, HashSet<DataManipulationRecord> request_packets, StringBuilder info_message)
         {
             //{
             //    StringBuilder contents = new StringBuilder();
