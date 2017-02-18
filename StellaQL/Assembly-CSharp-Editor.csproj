@@ -62,6 +62,9 @@
      <Compile Include="Assets\StellaQL\Editor\Tutorial.cs" />
      <Compile Include="Assets\StellaQL\MayBeDeletedThisFolder\Editor\TestFullpathParser.cs" />
      <Compile Include="Assets\StellaQL\MayBeDeletedThisFolder\Editor\TestStellaQLDemo.cs" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -104,11 +107,20 @@
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.Purchasing">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="AssetStoreTools">
+ <HintPath>C:/Users/Takahashi/Documents/muzudho/Unity/StellaQL/Assets/AssetStoreTools/Editor/AssetStoreTools.dll</HintPath>
+ </Reference>
+ <Reference Include="AssetStoreToolsExtra">
+ <HintPath>C:/Users/Takahashi/Documents/muzudho/Unity/StellaQL/Assets/AssetStoreTools/Editor/AssetStoreToolsExtra.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
@@ -118,12 +130,6 @@
  </Reference>
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="AssetStoreToolsExtra">
- <HintPath>C:/Users/Takahashi/Documents/muzudho/Unity/StellaQL/Assets/AssetStoreTools/Editor/AssetStoreToolsExtra.dll</HintPath>
- </Reference>
- <Reference Include="AssetStoreTools">
- <HintPath>C:/Users/Takahashi/Documents/muzudho/Unity/StellaQL/Assets/AssetStoreTools/Editor/AssetStoreTools.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
