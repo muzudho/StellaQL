@@ -63,11 +63,11 @@ namespace StellaQL
             int caret = 0;
             FullpathTokens ft = new FullpathTokens();
 
-            // Read until "~ Bear."
+            // "~ Bear." まで読む
             bool successful1 = FullpathSyntaxP.Fixed_LayerName_And_StatemachineNames(query, ref caret, ref ft);
             Assert.IsTrue(successful1);
 
-            // Continue reading "Cat".
+            // 続きから "Cat" まで読む
             bool successful2 = FullpathSyntaxP.Continued_Fixed_StateName(query, ref caret, ft, ref ft);
 
             Assert.IsTrue(successful2);
@@ -103,7 +103,6 @@ namespace StellaQL
         {
             string query = "Base Layer.Alpaca.Bear.Cat";
             // "Base Layer." まで走査した続きから。
-            // From the continuation of scanning to "Base Layer."
             int caret = "Base Layer.".Length;
             List<string> statemachinesNameEndsWithoutDot;
 
@@ -111,7 +110,6 @@ namespace StellaQL
 
             Assert.IsTrue(successful);
             // "～Bear." の次。
-            // Next to "~ Bear.".
             Assert.AreEqual(23, caret);
             Assert.AreEqual(2, statemachinesNameEndsWithoutDot.Count);
             Assert.AreEqual("Alpaca", statemachinesNameEndsWithoutDot[0]);
@@ -123,7 +121,6 @@ namespace StellaQL
         {
             string query = "Base Layer.Alpaca.Bear.Cat";
             // "Base Layer.Alpaca.Bear." まで走査した続きから。
-            // From the continuation of scanning to "Base Layer.Alpaca.Bear.".
             int caret = "Base Layer.Alpaca.Bear.".Length;
             string stateName;
 
@@ -131,7 +128,6 @@ namespace StellaQL
 
             Assert.IsTrue(successful);
             // "Cat" の次。
-            // Next to "Cat".
             Assert.AreEqual(26, caret);
             Assert.AreEqual("Cat", stateName);
         }

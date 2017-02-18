@@ -8,21 +8,16 @@ using UnityEngine;
 
 /// <summary>
 /// ウィンドウのタブ名にクラスのフルパスが出てくるので、このクラスは StellaQL ネームスペースに入れない。
-/// Since the full path of the class appears in the tab name of the window, this class can not be put in the StellaQL namespace.
 /// 
-/// 参考にしました。
-/// I referred it.
-/// 
-/// Get state names : 「※Editorのみ　アニメーターコントローラーのステート名をぜんぶ取得する(Unity5.1)」 http://shigekix5.wp.xdomain.jp/?p=1153
-/// Write log : 「【Unity】文字列をファイルに書き出す【Log出力】」 http://chroske.hatenablog.com/entry/2015/06/29/175830
-/// Write text : 「文字コードを指定してテキストファイルに書き込む」 http://dobon.net/vb/dotnet/file/writefile.html
+/// 参考 : ステート名の取得 : 「※Editorのみ　アニメーターコントローラーのステート名をぜんぶ取得する(Unity5.1)」 http://shigekix5.wp.xdomain.jp/?p=1153
+/// 参考 : ログ出力        : 「【Unity】文字列をファイルに書き出す【Log出力】」 http://chroske.hatenablog.com/entry/2015/06/29/175830
+/// 参考 : テキスト書き込み : 「文字コードを指定してテキストファイルに書き込む」 http://dobon.net/vb/dotnet/file/writefile.html
 /// </summary>
-public class StateCmdline : EditorWindow
+public class StateMachineQueryStellaQL : EditorWindow
 {
-    public StateCmdline()
+    public StateMachineQueryStellaQL()
     {
         // テキストボックスに表示するメッセージ
-        // Message displayed in text box
         info_message = new StringBuilder();
     }
 
@@ -30,8 +25,7 @@ public class StateCmdline : EditorWindow
     string oldPath_animatorController = FileUtility_Engine.PATH_ANIMATOR_CONTROLLER_FOR_DEMO_TEST;
     AnimatorController m_ac;
     /// <summary>
-    /// "\n" だけの改行は対応していないので、Environment.NewLine を使うこと。
-    /// Since only "\ n" newlines are not supported, use Environment.NewLine.
+    /// "\n" だけの改行は対応していないので、Environment.NewLine を使うこと
     /// </summary>
     string commandline = "# Sample" + Environment.NewLine+
         "STATE SELECT" + Environment.NewLine +
@@ -54,18 +48,16 @@ public class StateCmdline : EditorWindow
 
     /// <summary>
     /// メニューからクリックしたとき。
-    /// When clicking from the menu.
     /// </summary>
-    [MenuItem("Window/State Machine Command line (StellaQL)")]
+    [MenuItem("Window/State Machine Query (StellaQL)")]
     static void Init()
     {
         // ウィンドウのインスタンスを取得して開くことだけする。
-        // Just get an instance of the window and open it.
-        StateCmdline window = (StateCmdline)EditorWindow.GetWindow(typeof(StateCmdline));
+        StateMachineQueryStellaQL window = (StateMachineQueryStellaQL)EditorWindow.GetWindow(typeof(StateMachineQueryStellaQL));
         window.Show();
     }
 
-    public const string BUTTON_LABEL_GENERATE_FULLPATH = "Generate C# (Fullpath of all states)";
+    public const string BUTTON_LABEL_GENERATE_FULLPATH = "Generate C# (Fullpath of states)";
 
     void OnGUI()
     {
@@ -73,66 +65,42 @@ public class StateCmdline : EditorWindow
         if (null== m_ac)
         {
             // アニメーター・コントローラーを再取得。
-            // Re-acquire animator controller.
             m_ac = AssetDatabase.LoadAssetAtPath<AnimatorController>(oldPath_animatorController);
         }
         bool repaint_allWindow = false;
-        bool show_tutorial = false;
-        bool show_commandReference = false;
 
-        #region Tutorial button
-        if (GUILayout.Button("Tutorial (チュートリアル)"))
-        {
-            show_tutorial = true;
-
-            // 他のウィンドウはリフレッシュしてくれないみたいだ。
-            // It seems that other windows do not refresh.
-            Repaint();
-
-            repaint_allWindow = true;
-        }
-        GUILayout.Space(4.0f);
-        #endregion
         GUILayout.Label("Animator controller", EditorStyles.boldLabel);
         #region Drag and drop area
         var dropArea = GUILayoutUtility.GetRect(0.0f, 20.0f, GUILayout.ExpandWidth(true));
         GUI.Box(dropArea, "Animator Controller Drag & Drop");
         string droppedPath_animatorController = "";
         // マウス位置が GUI の範囲内であれば
-        // If the mouse position is within the GUI range
         if (dropArea.Contains(Event.current.mousePosition))
         {
             switch (Event.current.type)
             {
                 // マウス・ホバー中
-                // Mouse hover
                 case EventType.DragUpdated:
                     {
                         // ドラッグしているのが参照可能なオブジェクトの場合
-                        // If the object being dragged is a referenceable object
                         if (0 < DragAndDrop.objectReferences.Length)
                         {
                             //オブジェクトを受け入れる
-                            // Accept objects
                             DragAndDrop.AcceptDrag();
 
                             // マウス・カーソルの形状を、このオブジェクトを受け入れられるという見た目にする
-                            // Make the shape of the mouse cursor look like it can accept this object
                             DragAndDrop.visualMode = DragAndDropVisualMode.Generic;
                         }
                     }
                     break;
 
                 // ドロップしたら
-                // After dropping
                 case EventType.DragPerform:
                     {
                         // ドラッグしているものを現在のコントロール ID と紐付ける
-                        // Link what you are dragging with the current control ID
                         DragAndDrop.activeControlID = DragAndDrop.objectReferences[0].GetInstanceID();
 
                         // ドロップしているのが参照可能なオブジェクトの場合
-                        // If the object being dropped is a referenceable object
                         if (DragAndDrop.objectReferences.Length == 1)
                         {
                             foreach (var draggedObject in DragAndDrop.objectReferences)
@@ -159,7 +127,6 @@ public class StateCmdline : EditorWindow
         if (""!= droppedPath_animatorController && oldPath_animatorController != droppedPath_animatorController)
         {
             // 異なるアニメーター・コントローラーのパスがドロップされた
-            // Different animator controller path was dropped
             oldPath_animatorController = droppedPath_animatorController;
             isChanged_animatorController = true;
         }
@@ -170,7 +137,6 @@ public class StateCmdline : EditorWindow
         if (oldPath_animatorController != newPath_animatorController)
         {
             // 異なるアニメーター・コントローラーのパスが入力された
-            // Different animator controller path was entered
             oldPath_animatorController = newPath_animatorController;
             isChanged_animatorController = true;
         }
@@ -179,7 +145,6 @@ public class StateCmdline : EditorWindow
         if (isChanged_animatorController)
         {
             // アニメーター・コントローラーを再取得。
-            // Re-fetch animator controller.
             m_ac = AssetDatabase.LoadAssetAtPath<AnimatorController>(oldPath_animatorController);
         }
 
@@ -242,18 +207,9 @@ public class StateCmdline : EditorWindow
                 }
             }
             #endregion
-            #region Command reference button
-            if (GUILayout.Button("Command reference (コマンド一覧)"))
-            {
-                show_commandReference = true;
-                Repaint();
-                repaint_allWindow = true;
-            }
             GUILayout.Space(4.0f);
-            #endregion
             #region Export Spreadsheet button
             // 実際は CSV形式ファイルを出力する
-            // Actually output CSV format file
             GUILayout.Space(4.0f);
             if (GUILayout.Button("Export spread sheet")) // Export CSV
             {
@@ -270,12 +226,9 @@ public class StateCmdline : EditorWindow
                 {
                     if (i == 1) { outputDefinition = true; }
 
-                    // 参照
-                    // I reffered it
-                    // Cannot convert HashSet to IReadOnlyCollection : http://stackoverflow.com/questions/32762631/cannot-convert-hashset-to-ireadonlycollection
+                    // 参照 : Cannot convert HashSet to IReadOnlyCollection : http://stackoverflow.com/questions/32762631/cannot-convert-hashset-to-ireadonlycollection
                     {
                         StringBuilder contents = new StringBuilder();
-
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.parameters), ParameterRecord.Empty, outputDefinition, contents);
                         FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogParameters(m_ac.name, outputDefinition), contents, info_message);
                     }
@@ -289,7 +242,6 @@ public class StateCmdline : EditorWindow
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.statemachines), StatemachineRecord.Empty, outputDefinition, contents);
                         FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogStatemachine(m_ac.name, outputDefinition), contents, info_message);
                     }
-
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.states), StateRecord.Empty, outputDefinition, contents);
@@ -320,34 +272,28 @@ public class StateCmdline : EditorWindow
             #endregion
             #region Import Spreadsheet button
             // 実際はCSV形式ファイルを出力する
-            // Actually output CSV format file
             if (GUILayout.Button("Import spread sheet")) // Import CSV
             {
                 info_message.Append("Import spread sheet Start. filename(without extension) = "); info_message.Append(m_ac.name); info_message.AppendLine();
 
                 // 現状のデータ
-                // Current data
                 AconScanner aconScanner = new AconScanner();
                 aconScanner.ScanAnimatorController(m_ac, info_message);
                 AconDocument aconData_scanned = aconScanner.AconDocument;
 
                 HashSet<DataManipulationRecord> updateRequest;
                 // CSVファイル読取
-                // CSV file reading
                 FileUtility_Editor.ReadUpdateRequestCsv(out updateRequest, info_message);
                 AnimatorControllerWrapper acWrapper = new AnimatorControllerWrapper(m_ac);
-                // Perform update
                 // 更新を実行
                 Operation_Something.ManipulateData(acWrapper, aconData_scanned, updateRequest, info_message);
 
                 // 編集したレイヤーのプロパティーを反映させる。
-                // Reflect the properties of the edited layer.
                 //Operation_Layer.RefreshAllLayers(acWrapper);
 
                 FileUtility_Editor.DeleteUpdateRequestCsv(info_message);
 
                 // 他のウィンドウはリフレッシュしてくれないみたいだ。
-                // It seems that other windows do not refresh.
                 Repaint();
                 repaint_allWindow = true;
                 info_message.Append("Import spread sheet End. filename(without extension) = "); info_message.Append(m_ac.name); info_message.AppendLine();
@@ -373,7 +319,6 @@ public class StateCmdline : EditorWindow
                 info_message.AppendLine("Please, Push back the play button.");
 
                 // これ全部、アニメーター・ウィンドウには効かない
-                // Not all of this works for animator windows
                 //{
                 //    Repaint();
                 //    EditorApplication.RepaintAnimationWindow();
@@ -385,22 +330,6 @@ public class StateCmdline : EditorWindow
                 //    animatorWindow.Repaint();
                 //}
             }
-
-            // 再生ボタンを押したという注意書きのあとで。
-            // After the notice that the play button was pressed.
-            if (show_tutorial)
-            {
-                // 注意書きとの間に、1行隙間を空けておく。
-                // Leave one line between the note and the note.
-                info_message.AppendLine();
-                Tutorial.ToContents(info_message);
-            }
-            if (show_commandReference)
-            {
-                info_message.AppendLine();
-                Reference.ToContents(info_message);
-            }
-
         }
         #endregion
 
@@ -410,7 +339,6 @@ public class StateCmdline : EditorWindow
             if (0 < info_message.Length)
             {
                 // 更新
-                // update
                 info_message_ofTextbox = info_message.ToString();
                 info_message.Length = 0;
             }

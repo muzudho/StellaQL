@@ -1,6 +1,5 @@
 ﻿//
 // このファイルの改行は \r\n にしてください。
-// Required. This file new line is \r\n.
 //
 // Visual Studio 2015 [File] - [Advanced Save Options ...] - Line endings: [Windows (CR LF)]
 //
@@ -16,14 +15,12 @@ namespace StellaQL
 {
     /// <summary>
     /// TODO: Export spreadsheet のテストもやりたい。
-    /// TODO: I also want to test Export spreadsheet.
     /// </summary>
     public class TestStellaQLDemo
     {
         static TestStellaQLDemo()
         {
             // アニメーター・コントローラーを取得。
-            // Get an animator controller.
             m_ac = AssetDatabase.LoadAssetAtPath<AnimatorController>(FileUtility_Engine.PATH_ANIMATOR_CONTROLLER_FOR_DEMO_TEST);
         }
         static AnimatorController m_ac;
@@ -48,7 +45,6 @@ namespace StellaQL
 
         /// <summary>
         /// コメントと改行のテスト
-        /// Testing comments and blank lines
         /// </summary>
         [Test]
         public void N30_Query_Comment1_WindowsCrLf()
@@ -78,7 +74,6 @@ namespace StellaQL
         }
         /// <summary>
         /// コメントと改行のテスト
-        /// Testing comments and blank lines
         /// </summary>
         [Test]
         public void N30_Query_Comment2()
@@ -96,13 +91,11 @@ namespace StellaQL
                         ";
 
             // STATE SELECT文が働けばＯＫ。
-            // OK if the STATE SELECT statement works.
             int caret = 0;
             QueryTokens qt = new QueryTokens("Query syntax Not applicable");
 
             LexcalP.DeleteLineCommentAndBlankLine(ref query);
             // 最初の空行は飛ばします。
-            // Remove the first blank.
             LexcalP.VarSpaces(query, ref caret);
             SyntaxP.Pattern syntaxPattern = SyntaxP.FixedQuery(query, ref caret, ref qt);
 
@@ -183,7 +176,6 @@ namespace StellaQL
         #region N40 Fetch (Fetch records and indexes)
         /// <summary>
         /// ロッカーを元に、レコード・インデックスを取得
-        /// Acquire record index based on locker
         /// </summary>
         [Test]
         public void N40_Fetch_ByLockers()
@@ -251,7 +243,7 @@ namespace StellaQL
 
         #region N50 RecordsFilter (Record set)
         /// <summary>
-        /// ( ) Element filter
+        /// ( ) 要素フィルター
         /// </summary>
         [Test]
         public void N50_RecordsFilter_RecordsAnd()
@@ -270,7 +262,7 @@ namespace StellaQL
         }
 
         /// <summary>
-        /// [ ] Element filter
+        /// [ ] 要素フィルター
         /// </summary>
         [Test]
         public void N50_RecordsFilter_RecordsOr()
@@ -291,7 +283,7 @@ namespace StellaQL
         }
 
         /// <summary>
-        /// { } Element filter
+        /// { } 要素フィルター
         /// </summary>
         [Test]
         public void N50_RecordsFilter_RecordsNotAndNot()
@@ -346,13 +338,11 @@ namespace StellaQL
 
         /// <summary>
         /// ステート名正規表現フィルター
-        /// State name regular expression filter
         /// </summary>
         [Test]
         public void N50_RecordsFilter_StateFullNameRegex()
         {
             // 条件は、「Base Layer.」の下に、n または N が含まれるもの
-            // Conditions are those containing "n" or "N" under "Base Layer."
             string pattern = @"Base Layer\.\w*[Nn]\w*";
             StringBuilder message = new StringBuilder();
             HashSet<int> recordHashes = RecordsFilter.String_StateFullNameRegex(pattern, AControl.Instance.StateHash_to_record, message);
@@ -380,7 +370,7 @@ namespace StellaQL
         }
 
         /// <summary>
-        /// ( ) Tag filter.
+        /// ( ) タグ・フィルター
         /// </summary>
         [Test]
         public void N50_RecordsFilter_TagsAnd()
@@ -398,7 +388,7 @@ namespace StellaQL
         }
 
         /// <summary>
-        /// [　] tag filter
+        /// [　] タグ・フィルター
         /// </summary>
         [Test]
         public void N50_RecordsFilter_TagsOr()
@@ -430,7 +420,7 @@ namespace StellaQL
         }
 
         /// <summary>
-        /// ｛　｝ tag filter
+        /// ｛　｝ タグ・フィルター
         /// </summary>
         [Test]
         public void N50_RecordsFilter_TagsNotAndNot()
@@ -503,13 +493,11 @@ namespace StellaQL
 
         /// <summary>
         /// 補集合を取れるかテスト
-        /// Test whether complement can be taken
         /// </summary>
         [Test]
         public void N60_ToAttrLocker_GetComplement()
         {
             // int型にして持つ
-            // Hold it as an int type
             HashSet<int> set = Code.Hashes(new string[] { AControl.TAG_BI, AControl.TAG_DI });
             HashSet<int> attrLocker = TagSetOpe.Complement(set, Code.Hashes(new[] { AControl.TAG_ZERO, AControl.TAG_EI, AControl.TAG_BI, AControl.TAG_SI, AControl.TAG_DI, AControl.TAG_I, AControl.TAG_HORN, }));
 
@@ -525,7 +513,6 @@ namespace StellaQL
         #region N65 data builder
         /// <summary>
         /// TAG句
-        /// TAG phrase
         /// </summary>
         [Test]
         public void N65_Parse_TagParentesis_TokensToLockers()
@@ -819,7 +806,6 @@ namespace StellaQL
         public void N70_Syntax_TransitionUpdate()
         {
             // まず、線を引く。
-            // First, draw a line.
             {
                 string query = @"TRANSITION INSERT
                         SET Duration 0 ExitTime 1
@@ -832,7 +818,6 @@ namespace StellaQL
             }
 
             // こっから本番
-            // From here on
             {
                 string query = @"TRANSITION UPDATE
                         SET Duration 0.25 ExitTime 0.75
@@ -961,27 +946,21 @@ namespace StellaQL
             Assert.AreEqual("NewLayer0", qt.Words[0]);
 
             // ダブルクォーテーションの中身
-            // The contents of the double quotes
             Assert.AreEqual("New Layer1", qt.Words[1]);
 
             // ダブルクォーテーションの中身は「\"New Layer2\"」なので、値は「"New Layer2"」
-            // Since the contents of the double quotation is \"New Layer2\", the value is "New Layer2"
             Assert.AreEqual(@"""New Layer2""", qt.Words[2]);
 
             // エスケープシーケンス記号が含まれる場合
-            // When the escape sequence symbol is included
             Assert.AreEqual("New\\Layer3", qt.Words[3]);
 
             // 改行キャリッジリターンが含まれる場合
-            // When a carriage return is included
             Assert.AreEqual("New\rLayer4", qt.Words[4]);
 
             // 改行ニューラインが含まれる場合
-            // When a new line is included
             Assert.AreEqual("New\nLayer5", qt.Words[5]);
 
             // 改行\r\nが含まれる場合
-            // When \r\n is included
             Assert.AreEqual("New\r\nLayer6", qt.Words[6]);
             Assert.AreEqual(0, qt.Set.Count);
             Assert.AreEqual("", qt.Where_FullnameRegex);
@@ -1000,7 +979,6 @@ namespace StellaQL
         public void N70_Syntax_LayerDelete()
         {
             // 正規表現なので \ は \\ にする。
-            // Because it is a regular expression \ will be \\.
             string query = @"LAYER DELETE
                             WORDS
                             NewLayer0
@@ -1022,27 +1000,21 @@ namespace StellaQL
             Assert.AreEqual("NewLayer0", qt.Words[0]);
 
             // ダブルクォーテーションの中身
-            // The contents of the double quotes
             Assert.AreEqual("New Layer1", qt.Words[1]);
 
             // ダブルクォーテーションの中身は「\"New Layer2\"」なので、値は「"New Layer2"」
-            // Since the content of the double quotation is \"New Layer2\", the value is "New Layer2"
             Assert.AreEqual(@"""New Layer2""", qt.Words[2]);
 
             // 正規表現なので\\にする。エスケープシーケンス記号が含まれる場合。
-            // Since it is a regular expression, it is set to \\. When the escape sequence symbol is included.
             Assert.AreEqual("New\\\\Layer3", qt.Words[3]);
 
             // 改行キャリッジリターンが含まれる場合
-            // When a carriage return is included
             Assert.AreEqual("New\rLayer4", qt.Words[4]);
 
             // 改行ニューラインが含まれる場合
-            // When a new line is included
             Assert.AreEqual("New\nLayer5", qt.Words[5]);
 
             // 改行\r\nが含まれる場合
-            // If \r\n is included
             Assert.AreEqual("New\r\nLayer6", qt.Words[6]);
             Assert.AreEqual(0, qt.Set.Count);
             Assert.AreEqual("", qt.Where_FullnameRegex);
@@ -1058,7 +1030,6 @@ namespace StellaQL
         #region N75 syntax parser pharse
         /// <summary>
         /// WORDS句
-        /// WORDS phrase
         /// </summary>
         [Test]
         public void N70_SyntaxPhrase_AfterWords()
@@ -1076,7 +1047,6 @@ namespace StellaQL
 
         /// <summary>
         /// SET句
-        /// SET phrase
         /// </summary>
         [Test]
         public void N70_SyntaxPhrase_AfterSet()
@@ -1096,7 +1066,6 @@ namespace StellaQL
 
         /// <summary>
         /// SET句
-        /// SET phrase
         /// </summary>
         [Test]
         public void N70_SyntaxPhrase_AfterSet_Stringliteral()
@@ -1116,7 +1085,6 @@ namespace StellaQL
         #region N80 lexical parser
         /// <summary>
         /// TAG句
-        /// TAG phrase
         /// </summary>
         [Test]
         public void N80_Lexical_TagParentesis_StringToTokens()
@@ -1162,7 +1130,6 @@ namespace StellaQL
 
         /// <summary>
         /// 改行テスト
-        /// new line test
         /// </summary>
         [Test]
         public void N80_Lexical_Newline_WindowsCrLf()
@@ -1176,7 +1143,6 @@ namespace StellaQL
 a", ref caret);
             Assert.IsTrue(hit);
             // Windowsでは改行は 2文字、GitHubからダウンロードすると 1文字？
-            // On Windows, two lines of newlines, one character when downloading from GitHub?
             //Assert.IsTrue(0<caret && caret < 3, "caret=["+caret+"]");
             Assert.AreEqual(2, caret, "Maybe, No problem. caret=[" + caret + "] (If windows, It's 2. CR LF)");
 
@@ -1230,8 +1196,7 @@ a", ref caret);
         }
 
         /// <summary>
-        /// サブ関数。
-        /// sub functions.
+        /// サブ関数
         /// </summary>
         [Test]
         public void N80_Lexical_SubFunctions()
@@ -1345,14 +1310,12 @@ a", ref caret);
             Assert.AreEqual("dog", cells[3]);
 
             // 空白もそのまま残る
-            // The space remains as it is
             Assert.AreEqual("elephant ", cells[4]);
 
             Assert.AreEqual(" fox", cells[5]);
             Assert.AreEqual(" giraffe ", cells[6]);
 
             // ダブルクォートされているものは、前後のスペースは削除される。
-            // Spaces before and after the double quote are deleted.
             Assert.AreEqual("horse", cells[7]);
 
             Assert.AreEqual("Iguana", cells[8]);
