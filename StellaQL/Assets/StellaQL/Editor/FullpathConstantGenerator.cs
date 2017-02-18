@@ -86,7 +86,7 @@ namespace StellaQL
             contents.AppendLine("    }");
             contents.AppendLine("}");
 
-            StellaQLWriter.Write(StellaQLWriter.Filepath_GenerateFullpathConstCs(ac), contents, info_message);
+            FileUtility_Editor.Write(FileUtility_Editor.Filepath_GenerateFullpathConstCs(ac), contents, info_message);
         }
 
         /// <summary>

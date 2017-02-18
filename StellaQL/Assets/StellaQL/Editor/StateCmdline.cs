@@ -260,7 +260,7 @@ public class StateCmdline : EditorWindow
                 info_message.Append("Export spread sheet Start. filename(without extension) = "); info_message.Append(m_ac.name); info_message.AppendLine();
                 info_message.Append("Please, Use Libre Office Calc."); info_message.AppendLine();
                 info_message.Append("And use macro application."); info_message.AppendLine();
-                info_message.Append("location: "); info_message.Append(StellaQLWriter.Filepath_StellaQLMacroApplicationOds()); info_message.AppendLine();
+                info_message.Append("location: "); info_message.Append(FileUtility_Editor.Filepath_StellaQLMacroApplicationOds()); info_message.AppendLine();
 
                 AconScanner aconScanner = new AconScanner();
                 aconScanner.ScanAnimatorController(m_ac, info_message);
@@ -277,43 +277,43 @@ public class StateCmdline : EditorWindow
                         StringBuilder contents = new StringBuilder();
 
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.parameters), ParameterRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogParameters(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogParameters(m_ac.name, outputDefinition), contents, info_message);
                     }
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.layers), LayerRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogLayer(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogLayer(m_ac.name, outputDefinition), contents, info_message);
                     }
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.statemachines), StatemachineRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogStatemachine(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogStatemachine(m_ac.name, outputDefinition), contents, info_message);
                     }
 
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.states), StateRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogStates(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogStates(m_ac.name, outputDefinition), contents, info_message);
                     }
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.transitions), TransitionRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogTransition(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogTransition(m_ac.name, outputDefinition), contents, info_message);
                     }
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.conditions), ConditionRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogConditions(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogConditions(m_ac.name, outputDefinition), contents, info_message);
                     }
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.positions), PositionRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogPositions(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogPositions(m_ac.name, outputDefinition), contents, info_message);
                     }
                     {
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(aconDocument.motions), MotionRecord.Empty, outputDefinition, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogMotions(m_ac.name, outputDefinition), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogMotions(m_ac.name, outputDefinition), contents, info_message);
                     }
                 }
             }
@@ -334,7 +334,7 @@ public class StateCmdline : EditorWindow
                 HashSet<DataManipulationRecord> updateRequest;
                 // CSVファイル読取
                 // CSV file reading
-                StellaQLReader.ReadUpdateRequestCsv(out updateRequest, info_message);
+                FileUtility_Editor.ReadUpdateRequestCsv(out updateRequest, info_message);
                 AnimatorControllerWrapper acWrapper = new AnimatorControllerWrapper(m_ac);
                 // Perform update
                 // 更新を実行
@@ -344,7 +344,7 @@ public class StateCmdline : EditorWindow
                 // Reflect the properties of the edited layer.
                 //Operation_Layer.RefreshAllLayers(acWrapper);
 
-                StellaQLReader.DeleteUpdateRequestCsv(info_message);
+                FileUtility_Editor.DeleteUpdateRequestCsv(info_message);
 
                 // 他のウィンドウはリフレッシュしてくれないみたいだ。
                 // It seems that other windows do not refresh.

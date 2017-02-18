@@ -272,7 +272,7 @@ namespace StellaQL
                         Operation_State.Select(ac, Fetcher.States(ac, RecordsFilter.Qt_Where(qt, universe, info_message), universe), out recordSet, info_message);
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(recordSet), StateRecord.Empty, false, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogStateSelect(ac.name, qt.The), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogStateSelect(ac.name, qt.The), contents, info_message);
                         return true;
                     }
                 case SyntaxP.Pattern.TransitionInsert:
@@ -310,7 +310,7 @@ namespace StellaQL
                             info_message);
                         StringBuilder contents = new StringBuilder();
                         AconDataUtility.CreateCsvTable(AconDataUtility.ToHash(recordSet), TransitionRecord.Empty, false, contents);
-                        StellaQLWriter.Write(StellaQLWriter.Filepath_LogTransitionSelect(ac.name, qt.The), contents, info_message);
+                        FileUtility_Editor.Write(FileUtility_Editor.Filepath_LogTransitionSelect(ac.name, qt.The), contents, info_message);
                         return true;
                     }
                 case SyntaxP.Pattern.CsharpscriptGenerateFullpath:
