@@ -12,7 +12,7 @@ namespace DojinCircleGrayscale.StellaQL
     /// </summary>
     public abstract class FileUtility_Editor
     {
-        public const string WORK_FOLDER = "./StellaQL_Work/";
+        public const string WORK_FOLDER = "./Assets/StellaQL/Work/";
 
         #region Fixed file name
         // 固定のファイル名

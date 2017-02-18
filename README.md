@@ -66,31 +66,23 @@ Decompression the downloaded file.
 
 ex.) 7zip : http://www.7-zip.org/  
 
-(3) StellaQL-master/StellaQL/StellaQL_MacroApplication.ods ファイルを、あなたのプロジェクト・フォルダーにコピーしてください。  
-Copy the StellaQL-master / StellaQL / StellaQL_MacroApplication.ods file to your project folder.  
-![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif85.gif?raw=true)  
-
-required.) LibreOffice Calc (Free) : http://www.libreoffice.org/  
-
-(4) StellaQL-master/StellaQL/Assets/StellaQL フォルダーを、 Assets フォルダーの下にコピーしてください。  
+(3) StellaQL-master/StellaQL/Assets/StellaQL フォルダーを、 Assets フォルダーの下にコピーしてください。  
 StellaQL-master/StellaQL/Assets/StellaQL folder to Assets folder.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702151752gif81.gif?raw=true)  
 
 - No  StellaQL-master/StellaQL/
 - Yes StellaQL-master/StellaQL/Assets/StellaQL
 
-(5) メニューから [Window] - [State Machine Command line (StellaQL)] をクリックし、ウィンドウをドッキングさせてください。  
+(4) メニューから [Window] - [State Machine Command line (StellaQL)] をクリックし、ウィンドウをドッキングさせてください。  
 [Window] - [State Machine Command line (StellaQL)], And docking window.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702151752gif82.gif?raw=true)  
                                      
 
-(6) Assets/AnimatorControllers/Demo_Zoo をダブルクリックしてください。  
+(5) Assets/MayBeDeletedThisFolder/AnimatorControllers/Demo_Zoo をダブルクリックしてください。  
 Double click Assets/AnimatorControllers/Demo_Zoo.  
 ![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif83.gif?raw=true)  
 
-(7) [Tutorial (チュートリアル)] ボタンをクリックしてください。  
-Please click the [Tutorial] button.  
-![Animation.gif](https://github.com/muzudho/StellaQL/blob/master/img/2017-02/201702160428gif84.gif?raw=true)  
+(6) チュートリアルは Assets/StellaQL/Document/チュートリアル.txt に書いてあります。
 
 # Settings for use with your Unity project
 **あなたのUnityプロジェクトで使うための設定**  
@@ -101,8 +93,8 @@ How to use StellaQL with your animator controller
 (1) あなたのアニメーター・コントローラー・ファイル（.controller）を、StateCmdline ウィンドウの [Animator Controller Drag & Drop]エリアにドラッグ＆ドロップしてください。  
 Drag and drop your animator controller file (.controller) into the [Animator Controller Drag & Drop] area of the StateCmdline window.  
 
-[Generate C# (Fullpath of all states)]ボタンを押してください。  
-Please press the Generate C # (Fullpath of all states) button.  
+[Generate C# (Fullpath of states)]ボタンを押してください。  
+Please press the Generate C # (Fullpath of states) button.  
 
 アニメーター・コントローラー・ファイルと同じフォルダに、抽象クラスが自動で生成されます。  
 An abstract class is automatically generated in the same folder as the animator controller file.  

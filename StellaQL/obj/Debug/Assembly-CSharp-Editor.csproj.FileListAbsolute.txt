@@ -54,4 +54,3 @@ C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp-Ed
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\obj\Debug\Assembly-CSharp-Editor.pdb
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\AssetStoreTools.dll
 C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\AssetStoreToolsExtra.dll
-C:\Users\Takahashi\Documents\muzudho\Unity\StellaQL\Temp\bin\Debug\Assembly-CSharp.pdb
